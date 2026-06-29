@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Modèle "kiosque réseau local" : le serveur de chaque école est servi
+         en HTTP clair sur le Wi-Fi local (IP privée, ex. 192.168.x.x:8080),
+         découvert par QR code projeté. La config réseau Android ne supportant
+         pas les plages d'IP (CIDR), on autorise le trafic en clair globalement
+         pour que n'importe quelle IP d'école soit joignable.
+         À restreindre/supprimer le jour où les serveurs passeront en HTTPS. -->
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

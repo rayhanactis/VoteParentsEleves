@@ -1,0 +1,7 @@
+TEAM_ID=
+
+PRODUCT_NAME=VoteParentsEleves
+PRODUCT_BUNDLE_IDENTIFIER=com.rayhanactis.voteparentseleves.VoteParentsEleves$(TEAM_ID)
+
+CURRENT_PROJECT_VERSION=1
+MARKETING_VERSION=1.0
