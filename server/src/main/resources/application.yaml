@@ -1,0 +1,29 @@
+ktor:
+  deployment:
+    port: 8080
+  application:
+    modules:
+      - com.rayhanactis.voteparentseleves.server.HttpKt.configureHttp
+      - com.rayhanactis.voteparentseleves.server.MonitoringKt.configureMonitoring
+      - com.rayhanactis.voteparentseleves.server.SerializationKt.configureSerialization
+      - com.rayhanactis.voteparentseleves.server.SecurityKt.configureSecurity
+      - com.rayhanactis.voteparentseleves.server.ResourcesKt.configureResources
+      - com.rayhanactis.voteparentseleves.server.StatusPagesKt.configureStatusPages
+      - com.rayhanactis.voteparentseleves.server.AutoHeadResponseKt.configureAutoHeadResponse
+      - com.rayhanactis.voteparentseleves.server.ExposedKt.configureExposed
+      - com.rayhanactis.voteparentseleves.server.RoutingKt.configureRouting
+
+jwt:
+  # Vide = secret généré et persisté au 1er run dans ~/.voteparentseleves/jwt-secret.key
+  # (voir SecretStore.kt). Renseigner ici uniquement pour un déploiement avancé.
+  secret: ""
+  issuer: "voteparentseleves"
+  audience:
+    electeur: "electeur"
+    admin: "admin"
+  ttl:
+    electeurSec: 86400
+    adminSec: 3600
+
+dev:
+  seed: true
