@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <!-- Force le scanner QR en portrait (cf. PortraitCaptureActivity). -->
+        <activity
+            android:name="com.rayhanactis.voteparentseleves.scan.PortraitCaptureActivity"
+            android:screenOrientation="sensorPortrait"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
+            android:exported="false" />
+    </application>
+</manifest>
