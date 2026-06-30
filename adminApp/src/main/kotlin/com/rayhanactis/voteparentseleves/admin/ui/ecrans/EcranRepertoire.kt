@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import com.rayhanactis.voteparentseleves.admin.ui.composants.LazyColonneDefilante
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -132,7 +133,7 @@ fun EcranRepertoire(
                                 color = Couleurs.GrisDoux
                             )
                         } else {
-                            LazyColumn(
+                            LazyColonneDefilante(
                                 modifier = Modifier.fillMaxWidth().widthIn(max = 1000.dp),
                                 verticalArrangement = Arrangement.spacedBy(12.dp),
                                 contentPadding = PaddingValues(vertical = 4.dp)

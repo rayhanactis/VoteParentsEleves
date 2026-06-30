@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import com.rayhanactis.voteparentseleves.admin.ui.composants.ColonneDefilante
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,11 +44,10 @@ fun EcranLoginAdmin(onConnecte: (token: String) -> Unit) {
             .fillMaxSize()
             .background(Couleurs.FondCreme)
     ) {
-        Box(
+        ColonneDefilante(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(48.dp)
-                .verticalScroll(rememberScrollState()),
+                .padding(48.dp),
             contentAlignment = Alignment.Center
         ) {
             CartePleine(modifier = Modifier.widthIn(max = 480.dp)) {

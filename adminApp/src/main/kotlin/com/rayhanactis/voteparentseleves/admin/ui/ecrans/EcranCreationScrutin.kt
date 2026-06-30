@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import com.rayhanactis.voteparentseleves.admin.ui.composants.ColonneDefilante
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -62,11 +63,10 @@ fun EcranCreationScrutin(
             .fillMaxSize()
             .background(Couleurs.FondCreme)
     ) {
-        Box(
+        ColonneDefilante(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(32.dp)
-                .verticalScroll(rememberScrollState()),
+                .padding(32.dp),
             contentAlignment = Alignment.TopCenter
         ) {
             CartePleine(modifier = Modifier.widthIn(max = 720.dp)) {

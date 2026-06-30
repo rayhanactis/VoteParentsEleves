@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import com.rayhanactis.voteparentseleves.admin.ui.composants.LazyColonneDefilante
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -32,7 +33,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,8 +47,6 @@ import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.rayhanactis.voteparentseleves.admin.fichiers.choisirDestinationFichier
-import com.rayhanactis.voteparentseleves.admin.pdf.genererPdfProcesVerbal
 import com.rayhanactis.voteparentseleves.admin.viewmodel.DetailScrutinViewModel
 import com.rayhanactis.voteparentseleves.admin.viewmodel.EtatDetail
 import com.rayhanactis.voteparentseleves.api.LocalApiClient
@@ -59,10 +57,7 @@ import com.rayhanactis.voteparentseleves.model.Scrutin
 import com.rayhanactis.voteparentseleves.model.StatutScrutin
 import com.rayhanactis.voteparentseleves.ui.composants.BoutonClay
 import com.rayhanactis.voteparentseleves.ui.theme.Couleurs
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -74,18 +69,17 @@ fun EcranDetailScrutin(
     scrutinId: String,
     onRetour: () -> Unit,
     onAjouterListe: () -> Unit,
-    onModifierListe: (ListeCandidate) -> Unit
+    onModifierListe: (ListeCandidate) -> Unit,
+    onAfficherResultats: () -> Unit
 ) {
     val api = LocalApiClient.current
     val vm: DetailScrutinViewModel = viewModel { DetailScrutinViewModel(api, token) }
-    val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(scrutinId) { vm.charger(scrutinId) }
 
     var dialogRenommer by remember { mutableStateOf(false) }
     var dialogSuppressionScrutin by remember { mutableStateOf(false) }
     var listeASupprimer by remember { mutableStateOf<ListeCandidate?>(null) }
-    var messageExportPv by remember { mutableStateOf<String?>(null) }
 
     Box(modifier = Modifier.fillMaxSize().background(Couleurs.FondCreme)) {
         Column(modifier = Modifier.fillMaxSize()) {
@@ -111,38 +105,18 @@ fun EcranDetailScrutin(
                     onOuvrir = { vm.ouvrir(scrutinId) },
                     onFermer = { vm.fermer(scrutinId) },
                     onDepouiller = { vm.depouiller(scrutinId) },
+                    onProgrammer = { vm.programmer(scrutinId) },
+                    onAnnulerProgrammation = { vm.annulerProgrammation(scrutinId) },
                     onAjouterListe = onAjouterListe,
                     onRenommer = { dialogRenommer = true },
                     onSupprimerScrutin = { dialogSuppressionScrutin = true },
                     onModifierListe = onModifierListe,
                     onSupprimerListe = { listeASupprimer = it },
-                    onExporterPv = { resultats ->
-                        coroutineScope.launch {
-                            val nomScrutin = etat.scrutin.nom.ifBlank { etat.scrutin.id }
-                            val resultat = withContext(Dispatchers.IO) {
-                                val destination = choisirDestinationFichier(
-                                    titre = "Exporter le procès-verbal",
-                                    nomParDefaut = "pv-$scrutinId.pdf"
-                                ) ?: return@withContext null
-                                genererPdfProcesVerbal(resultats, nomScrutin, destination)
-                                destination
-                            }
-                            messageExportPv = if (resultat != null) "PV exporté : ${resultat.name}" else null
-                        }
-                    }
+                    onAfficherResultats = onAfficherResultats
                     )
                 }
             }
         }
-    }
-
-    messageExportPv?.let { message ->
-        AlertDialog(
-            onDismissRequest = { messageExportPv = null },
-            title = { Text("Information") },
-            text = { Text(message) },
-            confirmButton = { TextButton(onClick = { messageExportPv = null }) { Text("OK") } }
-        )
     }
 
     val etatActuel = vm.etat
@@ -220,15 +194,17 @@ private fun Contenu(
     onOuvrir: () -> Unit,
     onFermer: () -> Unit,
     onDepouiller: () -> Unit,
+    onProgrammer: () -> Unit,
+    onAnnulerProgrammation: () -> Unit,
     onAjouterListe: () -> Unit,
     onRenommer: () -> Unit,
     onSupprimerScrutin: () -> Unit,
     onModifierListe: (ListeCandidate) -> Unit,
     onSupprimerListe: (ListeCandidate) -> Unit,
-    onExporterPv: (ResultatScrutin) -> Unit
+    onAfficherResultats: () -> Unit
 ) {
     val configurable = scrutin.statut == StatutScrutin.Configure
-    LazyColumn(
+    LazyColonneDefilante(
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 32.dp, vertical = 24.dp),
@@ -241,11 +217,13 @@ private fun Contenu(
                 EnteteScrutin(scrutin = scrutin, onRenommer = onRenommer)
                 Spacer(Modifier.height(20.dp))
                 ActionsScrutin(
-                    statut = scrutin.statut,
+                    scrutin = scrutin,
                     actionEnCours = actionEnCours,
                     onOuvrir = onOuvrir,
                     onFermer = onFermer,
-                    onDepouiller = onDepouiller
+                    onDepouiller = onDepouiller,
+                    onProgrammer = onProgrammer,
+                    onAnnulerProgrammation = onAnnulerProgrammation
                 )
                 if (scrutin.statut == StatutScrutin.Ouvert) {
                     Spacer(Modifier.height(20.dp))
@@ -253,11 +231,7 @@ private fun Contenu(
                 }
                 if (resultats != null) {
                     Spacer(Modifier.height(20.dp))
-                    ResultatsCard(
-                        resultats = resultats,
-                        listes = listes,
-                        onExporterPv = { onExporterPv(resultats) }
-                    )
+                    PanneauScrutinTermine(onAfficherResultats = onAfficherResultats)
                 }
                 Spacer(Modifier.height(20.dp))
                 BoutonClay(
@@ -488,20 +462,57 @@ private fun BarreProgression(fraction: Float) {
 
 @Composable
 private fun ActionsScrutin(
-    statut: StatutScrutin,
+    scrutin: Scrutin,
     actionEnCours: Boolean,
     onOuvrir: () -> Unit,
     onFermer: () -> Unit,
-    onDepouiller: () -> Unit
+    onDepouiller: () -> Unit,
+    onProgrammer: () -> Unit,
+    onAnnulerProgrammation: () -> Unit
 ) {
-    when (statut) {
-        StatutScrutin.Configure -> BoutonClay(
-            texte = if (actionEnCours) "OUVERTURE…" else "OUVRIR LE SCRUTIN AU VOTE",
-            onClick = onOuvrir,
+    when (scrutin.statut) {
+        StatutScrutin.Configure -> Column(
             modifier = Modifier.fillMaxWidth(),
-            couleur = Couleurs.VertMenthe,
-            enabled = !actionEnCours
-        )
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            BoutonClay(
+                texte = if (actionEnCours) "PROGRAMMATION…" else "PROGRAMMER L'OUVERTURE",
+                onClick = onProgrammer,
+                modifier = Modifier.fillMaxWidth(),
+                couleur = Couleurs.OrangeCh,
+                enabled = !actionEnCours
+            )
+            Text(
+                text = "Le scrutin s'ouvrira automatiquement le ${formatDateHeure(scrutin.dateDebut)} " +
+                    "et se fermera le ${formatDateHeure(scrutin.dateFin)}.",
+                style = MaterialTheme.typography.bodySmall,
+                color = Couleurs.GrisDoux
+            )
+            BoutonClay(
+                texte = if (actionEnCours) "OUVERTURE…" else "OU OUVRIR MAINTENANT",
+                onClick = onOuvrir,
+                modifier = Modifier.fillMaxWidth(),
+                couleur = Couleurs.VertMenthe,
+                enabled = !actionEnCours
+            )
+        }
+        StatutScrutin.Programme -> Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Text(
+                text = "Ouverture programmée pour le ${formatDateHeure(scrutin.dateDebut)}.",
+                style = MaterialTheme.typography.titleMedium,
+                color = Couleurs.OrangeCh
+            )
+            BoutonClay(
+                texte = if (actionEnCours) "ANNULATION…" else "ANNULER LA PROGRAMMATION",
+                onClick = onAnnulerProgrammation,
+                modifier = Modifier.fillMaxWidth(),
+                couleur = Couleurs.GrisDoux,
+                enabled = !actionEnCours
+            )
+        }
         StatutScrutin.Ouvert -> BoutonClay(
             texte = if (actionEnCours) "FERMETURE…" else "FERMER LE SCRUTIN",
             onClick = onFermer,
@@ -525,49 +536,36 @@ private fun ActionsScrutin(
 }
 
 @Composable
-private fun ResultatsCard(
-    resultats: ResultatScrutin,
-    listes: List<ListeCandidate>,
-    onExporterPv: () -> Unit
-) {
+private fun PanneauScrutinTermine(onAfficherResultats: () -> Unit) {
     val shape = RoundedCornerShape(20.dp)
-    val nomListe: (String) -> String = { id -> listes.firstOrNull { it.id == id }?.nom ?: id }
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .shadow(elevation = 6.dp, shape = shape)
-            .background(Color.White, shape)
-            .border(1.5.dp, Couleurs.BleuKlein.copy(alpha = 0.25f), shape)
-            .padding(20.dp)
+            .shadow(elevation = 8.dp, shape = shape)
+            .background(Couleurs.BleuKlein, shape)
+            .padding(24.dp)
     ) {
-        Column {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text(
-                text = "Résultats (algorithme de Hare)",
-                style = MaterialTheme.typography.titleLarge,
-                color = Couleurs.NoirEncre
+                text = "Scrutin terminé",
+                style = MaterialTheme.typography.headlineMedium,
+                color = Color.White
             )
-            Spacer(Modifier.height(12.dp))
-            resultats.siegesAttribues.entries.sortedByDescending { it.value }.forEach { (listeId, sieges) ->
-                Row(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-                    Text(
-                        text = nomListe(listeId),
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = Couleurs.NoirEncre,
-                        modifier = Modifier.weight(1f)
-                    )
-                    Text(
-                        text = "${resultats.resultatsParListe[listeId] ?: 0} voix · $sieges siège(s)",
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = Couleurs.GrisDoux
-                    )
-                }
-            }
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(6.dp))
+            Text(
+                text = "Le dépouillement est disponible.",
+                style = MaterialTheme.typography.bodyLarge,
+                color = Color.White.copy(alpha = 0.85f)
+            )
+            Spacer(Modifier.height(18.dp))
             BoutonClay(
-                texte = "Exporter le procès-verbal en PDF",
-                onClick = onExporterPv,
+                texte = "AFFICHER LES RÉSULTATS",
+                onClick = onAfficherResultats,
                 modifier = Modifier.fillMaxWidth(),
-                couleur = Couleurs.VertMenthe
+                couleur = Couleurs.JaunePop
             )
         }
     }
@@ -797,6 +795,7 @@ private fun CentreErreur(message: String, onReessayer: () -> Unit) {
 
 private fun statutDisplay(statut: StatutScrutin): Pair<Color, String> = when (statut) {
     StatutScrutin.Configure -> Couleurs.GrisDoux to "En configuration"
+    StatutScrutin.Programme -> Couleurs.OrangeCh to "Programmé"
     StatutScrutin.Ouvert -> Couleurs.VertMenthe to "Ouvert au vote"
     StatutScrutin.Ferme -> Couleurs.JaunePop to "Fermé"
     StatutScrutin.Depouille -> Couleurs.BleuKlein to "Dépouillé"
@@ -806,6 +805,11 @@ private val formatterDate = DateTimeFormatter.ofPattern("dd/MM/yyyy").withZone(Z
 private fun formatDate(epochMillis: Long): String =
     if (epochMillis == Long.MAX_VALUE) "∞"
     else formatterDate.format(Instant.ofEpochMilli(epochMillis))
+
+private val formatterDateHeure = DateTimeFormatter.ofPattern("dd/MM/yyyy 'à' HH:mm").withZone(ZoneId.systemDefault())
+private fun formatDateHeure(epochMillis: Long): String =
+    if (epochMillis == Long.MAX_VALUE) "∞"
+    else formatterDateHeure.format(Instant.ofEpochMilli(epochMillis))
 
 private val formatterHeure = DateTimeFormatter.ofPattern("HH:mm:ss").withZone(ZoneId.systemDefault())
 private fun formatHeure(epochMillis: Long): String =

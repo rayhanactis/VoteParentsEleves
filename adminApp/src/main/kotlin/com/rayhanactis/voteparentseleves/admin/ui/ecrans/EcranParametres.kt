@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import com.rayhanactis.voteparentseleves.admin.ui.composants.ColonneDefilante
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -75,8 +76,8 @@ fun EcranParametres(
                 onDeconnexion = onDeconnexion
             )
 
-            Box(
-                modifier = Modifier.fillMaxSize().padding(32.dp).verticalScroll(rememberScrollState()),
+            ColonneDefilante(
+                modifier = Modifier.fillMaxSize().padding(32.dp),
                 contentAlignment = Alignment.TopCenter
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {

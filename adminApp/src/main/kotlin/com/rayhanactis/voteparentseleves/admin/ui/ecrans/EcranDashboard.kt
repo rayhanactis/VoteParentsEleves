@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
+import com.rayhanactis.voteparentseleves.admin.ui.composants.LazyColonneDefilante
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -127,7 +128,7 @@ private fun ContenuListeScrutins(
         if (scrutins.isEmpty()) {
             EtatVide(onNouveauScrutin)
         } else {
-            LazyColumn(
+            LazyColonneDefilante(
                 modifier = Modifier
                     .fillMaxWidth()
                     .widthIn(max = 900.dp),
@@ -176,6 +177,13 @@ private fun CarteScrutin(scrutin: Scrutin, onClick: () -> Unit) {
                     style = MaterialTheme.typography.bodyMedium,
                     color = Couleurs.GrisDoux
                 )
+                if (scrutin.statut == StatutScrutin.Programme) {
+                    Text(
+                        text = "Ouverture programmée pour le ${formatDateHeure(scrutin.dateDebut)}",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Couleurs.OrangeCh
+                    )
+                }
             }
             BadgeStatut(couleurStatut, libelleStatut)
         }
@@ -199,10 +207,19 @@ private fun BadgeStatut(couleur: Color, libelle: String) {
 
 private fun statutDisplay(statut: StatutScrutin): Pair<Color, String> = when (statut) {
     StatutScrutin.Configure -> Couleurs.GrisDoux to "En configuration"
+    StatutScrutin.Programme -> Couleurs.OrangeCh to "Programmé"
     StatutScrutin.Ouvert -> Couleurs.VertMenthe to "Ouvert au vote"
     StatutScrutin.Ferme -> Couleurs.JaunePop to "Fermé"
     StatutScrutin.Depouille -> Couleurs.BleuKlein to "Dépouillé"
 }
+
+private val formatterDateHeure =
+    java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy 'à' HH:mm")
+        .withZone(java.time.ZoneId.systemDefault())
+
+private fun formatDateHeure(epochMillis: Long): String =
+    if (epochMillis == Long.MAX_VALUE) "∞"
+    else formatterDateHeure.format(java.time.Instant.ofEpochMilli(epochMillis))
 
 @Composable
 private fun EtatVide(onNouveauScrutin: () -> Unit) {

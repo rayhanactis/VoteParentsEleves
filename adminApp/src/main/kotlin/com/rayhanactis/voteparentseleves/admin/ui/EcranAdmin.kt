@@ -7,6 +7,7 @@ sealed class EcranAdmin {
     data class Dashboard(val token: String) : EcranAdmin()
     data class CreationScrutin(val token: String) : EcranAdmin()
     data class DetailScrutin(val token: String, val scrutinId: String) : EcranAdmin()
+    data class Resultats(val token: String, val scrutinId: String) : EcranAdmin()
     data class CreationListe(val token: String, val scrutinId: String) : EcranAdmin()
     data class ModificationListe(
         val token: String,

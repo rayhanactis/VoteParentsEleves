@@ -18,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import com.rayhanactis.voteparentseleves.admin.ui.composants.ColonneDefilante
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
@@ -85,11 +86,10 @@ fun EcranCreationListe(
     val modeEdition = listeExistante != null
 
     Box(modifier = Modifier.fillMaxSize().background(Couleurs.FondCreme)) {
-        Box(
+        ColonneDefilante(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(32.dp)
-                .verticalScroll(rememberScrollState()),
+                .padding(32.dp),
             contentAlignment = Alignment.TopCenter
         ) {
             CartePleine(modifier = Modifier.widthIn(max = 720.dp)) {

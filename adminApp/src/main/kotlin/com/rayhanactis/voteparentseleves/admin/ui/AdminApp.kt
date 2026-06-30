@@ -15,6 +15,7 @@ import com.rayhanactis.voteparentseleves.admin.ui.ecrans.EcranLoginAdmin
 import com.rayhanactis.voteparentseleves.admin.ui.ecrans.EcranParametres
 import com.rayhanactis.voteparentseleves.admin.ui.ecrans.EcranProjectionQr
 import com.rayhanactis.voteparentseleves.admin.ui.ecrans.EcranRepertoire
+import com.rayhanactis.voteparentseleves.admin.ui.ecrans.EcranResultats
 import com.rayhanactis.voteparentseleves.api.ApiClient
 import com.rayhanactis.voteparentseleves.api.LocalApiClient
 import com.rayhanactis.voteparentseleves.ui.theme.AppTheme
@@ -91,7 +92,14 @@ private fun NavigationAdmin() {
             onAjouterListe = { ecran = EcranAdmin.CreationListe(e.token, e.scrutinId) },
             onModifierListe = { liste ->
                 ecran = EcranAdmin.ModificationListe(e.token, e.scrutinId, liste)
-            }
+            },
+            onAfficherResultats = { ecran = EcranAdmin.Resultats(e.token, e.scrutinId) }
+        )
+
+        is EcranAdmin.Resultats -> EcranResultats(
+            token = e.token,
+            scrutinId = e.scrutinId,
+            onRetour = { ecran = EcranAdmin.DetailScrutin(e.token, e.scrutinId) }
         )
 
         is EcranAdmin.CreationListe -> EcranCreationListe(

@@ -13,15 +13,38 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject
 import java.io.File
+import java.nio.charset.Charset
 
 private val POLICE_TITRE = PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD)
 private val POLICE_TEXTE = PDType1Font(Standard14Fonts.FontName.HELVETICA)
+
+private val ENCODEUR_WINANSI = Charset.forName("windows-1252").newEncoder()
+
+/**
+ * Helvetica standard de PDFBox n'accepte que l'encodage WinAnsi (CP1252). On
+ * remplace d'abord la ponctuation typographique par son équivalent ASCII, puis
+ * on neutralise tout caractère restant non encodable (→ `?`) pour ne jamais
+ * lever `U+XXXX is not available in this font's encoding`.
+ */
+private fun assainirWinAnsi(contenu: String): String {
+    val preTraite = contenu
+        .replace('’', '\'').replace('‘', '\'')
+        .replace('“', '"').replace('”', '"')
+        .replace('–', '-').replace('—', '-')
+        .replace(' ', ' ')
+        .replace("…", "...")
+        .replace("→", "->").replace("←", "<-")
+        .replace("✓", "[OK]").replace("✕", "x").replace("✗", "x")
+    return buildString {
+        preTraite.forEach { c -> append(if (ENCODEUR_WINANSI.canEncode(c)) c else '?') }
+    }
+}
 
 private fun PDPageContentStream.texte(x: Float, y: Float, taille: Float, police: PDType1Font, contenu: String) {
     beginText()
     setFont(police, taille)
     newLineAtOffset(x, y)
-    showText(contenu)
+    showText(assainirWinAnsi(contenu))
     endText()
 }
 
