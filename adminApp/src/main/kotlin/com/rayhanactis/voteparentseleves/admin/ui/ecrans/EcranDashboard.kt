@@ -53,6 +53,7 @@ fun EcranDashboard(
     onSelectionnerScrutin: (Scrutin) -> Unit,
     onAllerRepertoire: () -> Unit,
     onAllerParametres: () -> Unit,
+    onAllerAssistant: () -> Unit,
     onProjeterQr: () -> Unit
 ) {
     val api = LocalApiClient.current
@@ -71,6 +72,7 @@ fun EcranDashboard(
                 onAllerDashboard = { vm.charger() },
                 onAllerRepertoire = onAllerRepertoire,
                 onAllerParametres = onAllerParametres,
+                onAllerAssistant = onAllerAssistant,
                 onActualiser = { vm.charger() },
                 onDeconnexion = onDeconnexion,
                 onProjeterQr = onProjeterQr

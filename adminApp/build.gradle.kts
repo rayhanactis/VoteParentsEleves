@@ -33,6 +33,11 @@ dependencies {
     implementation(libs.pdfbox)
     implementation(libs.zxing.core)
     implementation(libs.zxing.javase)
+
+    // Assistant IA (bonus jury, branche feature/ia) : LangChain4j + Ollama local.
+    implementation(platform(libs.langchain4j.bom))
+    implementation(libs.langchain4j.core)
+    implementation(libs.langchain4j.ollama)
 }
 
 compose.desktop {

@@ -25,7 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.rayhanactis.voteparentseleves.ui.theme.Couleurs
 
-enum class OngletAdmin { DASHBOARD, REPERTOIRE, PARAMETRES }
+enum class OngletAdmin { DASHBOARD, REPERTOIRE, PARAMETRES, ASSISTANT }
 
 /**
  * Largeur en dessous de laquelle la barre passe en disposition « compacte » :
@@ -41,6 +41,7 @@ fun BarreNavigation(
     onAllerDashboard: () -> Unit,
     onAllerRepertoire: () -> Unit,
     onAllerParametres: () -> Unit,
+    onAllerAssistant: (() -> Unit)? = null,
     onActualiser: (() -> Unit)? = null,
     onDeconnexion: (() -> Unit)? = null,
     onProjeterQr: (() -> Unit)? = null
@@ -66,7 +67,7 @@ fun BarreNavigation(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Onglets(actif, onAllerDashboard, onAllerRepertoire, onAllerParametres)
+                    Onglets(actif, onAllerDashboard, onAllerRepertoire, onAllerParametres, onAllerAssistant)
                     Actions(onProjeterQr, onActualiser, onDeconnexion)
                 }
             }
@@ -79,7 +80,7 @@ fun BarreNavigation(
             ) {
                 Box(modifier = Modifier.padding(end = 32.dp)) { Titre() }
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Onglets(actif, onAllerDashboard, onAllerRepertoire, onAllerParametres)
+                    Onglets(actif, onAllerDashboard, onAllerRepertoire, onAllerParametres, onAllerAssistant)
                 }
                 Spacer(Modifier.weight(1f))
                 Actions(onProjeterQr, onActualiser, onDeconnexion)
@@ -113,11 +114,15 @@ private fun Onglets(
     actif: OngletAdmin,
     onAllerDashboard: () -> Unit,
     onAllerRepertoire: () -> Unit,
-    onAllerParametres: () -> Unit
+    onAllerParametres: () -> Unit,
+    onAllerAssistant: (() -> Unit)?
 ) {
     Onglet("Scrutins", actif == OngletAdmin.DASHBOARD, onAllerDashboard)
     Onglet("Parents d'élèves", actif == OngletAdmin.REPERTOIRE, onAllerRepertoire)
     Onglet("Paramètres", actif == OngletAdmin.PARAMETRES, onAllerParametres)
+    if (onAllerAssistant != null) {
+        Onglet("Assistant IA", actif == OngletAdmin.ASSISTANT, onAllerAssistant)
+    }
 }
 
 @Composable

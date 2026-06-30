@@ -14,6 +14,7 @@ import com.rayhanactis.voteparentseleves.admin.ui.ecrans.EcranDetailScrutin
 import com.rayhanactis.voteparentseleves.admin.ui.ecrans.EcranLoginAdmin
 import com.rayhanactis.voteparentseleves.admin.ui.ecrans.EcranParametres
 import com.rayhanactis.voteparentseleves.admin.ui.ecrans.EcranProjectionQr
+import com.rayhanactis.voteparentseleves.admin.ui.ecrans.EcranAssistant
 import com.rayhanactis.voteparentseleves.admin.ui.ecrans.EcranRepertoire
 import com.rayhanactis.voteparentseleves.admin.ui.ecrans.EcranResultats
 import com.rayhanactis.voteparentseleves.api.ApiClient
@@ -48,6 +49,7 @@ private fun NavigationAdmin() {
             },
             onAllerRepertoire = { ecran = EcranAdmin.Repertoire(e.token) },
             onAllerParametres = { ecran = EcranAdmin.Parametres(e.token) },
+            onAllerAssistant = { ecran = EcranAdmin.Assistant(e.token) },
             onProjeterQr = { ecran = EcranAdmin.ProjectionQr(retourVers = e) }
         )
 
@@ -55,6 +57,7 @@ private fun NavigationAdmin() {
             token = e.token,
             onAllerDashboard = { ecran = EcranAdmin.Dashboard(e.token) },
             onAllerParametres = { ecran = EcranAdmin.Parametres(e.token) },
+            onAllerAssistant = { ecran = EcranAdmin.Assistant(e.token) },
             onDeconnexion = { ecran = EcranAdmin.Login },
             onOuvrirParent = { parentId ->
                 ecran = EcranAdmin.DetailParent(e.token, parentId)
@@ -71,6 +74,14 @@ private fun NavigationAdmin() {
             token = e.token,
             onAllerDashboard = { ecran = EcranAdmin.Dashboard(e.token) },
             onAllerRepertoire = { ecran = EcranAdmin.Repertoire(e.token) },
+            onAllerAssistant = { ecran = EcranAdmin.Assistant(e.token) },
+            onDeconnexion = { ecran = EcranAdmin.Login }
+        )
+
+        is EcranAdmin.Assistant -> EcranAssistant(
+            onAllerDashboard = { ecran = EcranAdmin.Dashboard(e.token) },
+            onAllerRepertoire = { ecran = EcranAdmin.Repertoire(e.token) },
+            onAllerParametres = { ecran = EcranAdmin.Parametres(e.token) },
             onDeconnexion = { ecran = EcranAdmin.Login }
         )
 

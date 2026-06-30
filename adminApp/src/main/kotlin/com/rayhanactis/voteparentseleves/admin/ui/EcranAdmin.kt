@@ -15,6 +15,7 @@ sealed class EcranAdmin {
         val liste: ListeCandidate
     ) : EcranAdmin()
     data class Repertoire(val token: String) : EcranAdmin()
+    data class Assistant(val token: String) : EcranAdmin()
     data class DetailParent(val token: String, val parentId: String) : EcranAdmin()
     data class Parametres(val token: String) : EcranAdmin()
     data class ProjectionQr(val retourVers: EcranAdmin) : EcranAdmin()

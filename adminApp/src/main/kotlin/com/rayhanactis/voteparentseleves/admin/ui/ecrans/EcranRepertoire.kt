@@ -54,6 +54,7 @@ fun EcranRepertoire(
     token: String,
     onAllerDashboard: () -> Unit,
     onAllerParametres: () -> Unit,
+    onAllerAssistant: () -> Unit,
     onDeconnexion: () -> Unit,
     onOuvrirParent: (parentId: String) -> Unit
 ) {
@@ -70,6 +71,7 @@ fun EcranRepertoire(
                 onAllerDashboard = onAllerDashboard,
                 onAllerRepertoire = { vm.charger() },
                 onAllerParametres = onAllerParametres,
+                onAllerAssistant = onAllerAssistant,
                 onActualiser = { vm.charger() },
                 onDeconnexion = onDeconnexion
             )

@@ -56,6 +56,7 @@ fun EcranParametres(
     token: String,
     onAllerDashboard: () -> Unit,
     onAllerRepertoire: () -> Unit,
+    onAllerAssistant: () -> Unit,
     onDeconnexion: () -> Unit
 ) {
     val api = LocalApiClient.current
@@ -72,6 +73,7 @@ fun EcranParametres(
                 onAllerDashboard = onAllerDashboard,
                 onAllerRepertoire = onAllerRepertoire,
                 onAllerParametres = { vm.charger() },
+                onAllerAssistant = onAllerAssistant,
                 onActualiser = { vm.charger() },
                 onDeconnexion = onDeconnexion
             )
