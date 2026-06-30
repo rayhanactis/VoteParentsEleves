@@ -31,3 +31,5 @@ screenshot_*.png
 # Docs de travail interne (hors livrable)
 CLAUDE.md
 ROADMAP.md
+FEATURES.md
+ARCHITECTURE.md
