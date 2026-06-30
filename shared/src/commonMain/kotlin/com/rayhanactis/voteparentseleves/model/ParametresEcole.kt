@@ -13,7 +13,6 @@ data class ParametresEcole(
     val nomEcole: String,
     val codePostal: String,
     val codeEcole: String,
-    // Configuration SMTP pour l'envoi des identifiants aux parents par email.
     val emailExpediteur: String = "",
     val smtpHost: String = "",
     val smtpPort: Int = 587,

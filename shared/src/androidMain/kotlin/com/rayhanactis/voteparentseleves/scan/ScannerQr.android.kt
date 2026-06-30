@@ -6,9 +6,6 @@ import androidx.compose.runtime.LaunchedEffect
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 
-// Lance l'activité de scan fournie par zxing-android-embedded (gère elle-même
-// la permission caméra et l'UI de visée). Résultat renvoyé via le contrat
-// AndroidX Activity Result, donc pas besoin d'Activity custom.
 @Composable
 actual fun ScannerQrPlein(
     onResultat: (String) -> Unit,
@@ -24,8 +21,6 @@ actual fun ScannerQrPlein(
             ScanOptions()
                 .setDesiredBarcodeFormats(ScanOptions.QR_CODE)
                 .setBeepEnabled(false)
-                // false = on laisse l'activité (PortraitCaptureActivity) imposer
-                // son orientation portrait via le manifeste.
                 .setOrientationLocked(false)
                 .setCaptureActivity(PortraitCaptureActivity::class.java)
                 .setPrompt("Visez le QR code")

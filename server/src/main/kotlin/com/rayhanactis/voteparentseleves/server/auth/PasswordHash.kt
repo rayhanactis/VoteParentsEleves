@@ -6,8 +6,6 @@ import java.util.Base64
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.PBEKeySpec
 
-// PBKDF2 (HMAC-SHA-256) avec sel par utilisateur.
-// POC pédagogique — pour une mise en production, utiliser BCrypt/Argon2.
 object PasswordHash {
     private const val ALGO = "PBKDF2WithHmacSHA256"
     private const val ITERATIONS = 100_000

@@ -19,7 +19,6 @@ sealed class ResultatDepotVote {
 
 object VoteRepository {
 
-    // L'électeur a-t-il déjà émargé (voté) pour ce scrutin ?
     fun aVote(scrutinId: String, electeurId: String): Boolean = transaction {
         EmargementsTable
             .selectAll()

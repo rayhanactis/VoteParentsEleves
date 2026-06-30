@@ -7,8 +7,6 @@ sealed class ResultatParsingCsv {
     data class Echec(val raison: String) : ResultatParsingCsv()
 }
 
-// Format attendu : une ligne par parent "Nom,Prénom" ou "Nom;Prénom".
-// Une éventuelle ligne d'en-tête ("Nom,Prenom") est détectée et ignorée.
 fun parserCsvElecteurs(contenu: String): ResultatParsingCsv {
     val lignesBrutes = contenu.lines().map { it.trim() }.filter { it.isNotBlank() }
     if (lignesBrutes.isEmpty()) return ResultatParsingCsv.Echec("Le fichier est vide.")

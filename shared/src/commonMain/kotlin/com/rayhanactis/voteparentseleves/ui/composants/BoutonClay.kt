@@ -31,8 +31,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.rayhanactis.voteparentseleves.ui.theme.Couleurs
 
-// Bouton "claymorphique" : très arrondi, gradient diagonal subtil pour
-// l'effet pâte à modeler, élévation prononcée qui s'enfonce au press.
 @Composable
 fun BoutonClay(
     texte: String,
@@ -41,8 +39,6 @@ fun BoutonClay(
     couleur: Color = MaterialTheme.colorScheme.primary,
     couleurContenu: Color = Couleurs.BlancCasse,
     enabled: Boolean = true,
-    // Style du libellé. Par défaut labelLarge ; passez un style plus petit pour
-    // des boutons étroits dont le texte risque d'être tronqué.
     style: TextStyle? = null
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -106,7 +102,6 @@ fun BoutonClay(
     }
 }
 
-// Mélange deux couleurs (lerp simple) — utile pour des dégradés.
 private fun Color.melangerAvec(autre: Color, ratio: Float): Color {
     val r = ratio.coerceIn(0f, 1f)
     return Color(

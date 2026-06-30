@@ -15,11 +15,6 @@ sealed class ResultatRestauration {
 
 object BackupRepository {
 
-    // VACUUM INTO produit un fichier .db unique et consistant, peu importe
-    // l'état du journal WAL au moment de l'appel (cf. ROADMAP). SQLite refuse
-    // VACUUM à l'intérieur d'une transaction explicite : on prend donc une
-    // connexion brute du pool plutôt que `transaction { }` (qui ouvre un
-    // BEGIN/COMMIT autour du bloc).
     fun sauvegarder(destination: File): ResultatSauvegarde = runCatching {
         val cheminEchappe = destination.absolutePath.replace("'", "''")
         DbHolder.dataSource().connection.use { connexion ->

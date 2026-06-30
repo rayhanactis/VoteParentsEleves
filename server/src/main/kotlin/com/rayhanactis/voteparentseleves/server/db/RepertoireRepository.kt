@@ -68,8 +68,6 @@ object RepertoireRepository {
         ResultatActionParent.Succes(maj)
     }
 
-    // Génère (ou régénère) un mot de passe pour le parent, stocke son hash et
-    // renvoie le mot de passe en clair (seule occasion où il existe en clair).
     fun genererMotDePasse(electeurId: String): IdentifiantsGeneres? = transaction {
         val existe = ElecteursTable.selectAll()
             .where { ElecteursTable.id eq electeurId }

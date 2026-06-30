@@ -2,8 +2,6 @@ package com.rayhanactis.voteparentseleves.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Palette inspirée Centre Pompidou / Kandinsky / Jeff Koons.
-// Bold, primaire, joyeuse, lisible.
 
 object Couleurs {
     val FondCreme = Color(0xFFFFF4DA)
@@ -18,7 +16,6 @@ object Couleurs {
     val RosePop = Color(0xFFF36AC8)
     val OrangeCh = Color(0xFFFF8A3D)
 
-    // Couleurs cycliques pour les listes
     val PaletteListes = listOf(
         RougePompidou,
         BleuKlein,

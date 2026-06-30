@@ -100,9 +100,6 @@ private fun ContenuListes(
             items(listes) { liste ->
                 val index = listes.indexOf(liste)
                 val couleur = Couleurs.PaletteListes[index % Couleurs.PaletteListes.size]
-                // Priorité aux champs renvoyés par l'API ; fallback sur les
-                // descriptions hard-codées de MockData pour les anciens
-                // jeux de données qui n'ont pas encore le champ description.
                 val description = liste.description.ifBlank {
                     MockData.descriptions[liste.id].orEmpty()
                 }

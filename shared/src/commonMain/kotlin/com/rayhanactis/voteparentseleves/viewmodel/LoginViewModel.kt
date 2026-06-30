@@ -32,9 +32,6 @@ class LoginViewModel(private val api: ApiClient) : ViewModel() {
             )) {
                 is ApiResult.Succes -> {
                     val token = r.data.token
-                    // On vérifie tout de suite si cet électeur a déjà voté pour
-                    // l'orienter vers l'écran de remerciement plutôt que de le
-                    // laisser refaire le parcours pour être refusé à la fin.
                     val dejaVote = (api.aDejaVote(token, scrutinId) as? ApiResult.Succes)?.data?.aVote ?: false
                     etat = EtatLogin.Pret
                     onSucces(token, scrutinId, dejaVote)

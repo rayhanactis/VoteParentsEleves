@@ -23,10 +23,6 @@ import com.rayhanactis.voteparentseleves.admin.reseau.adresseIpLocale
 import com.rayhanactis.voteparentseleves.qr.construireQrDecouverte
 import com.rayhanactis.voteparentseleves.ui.theme.Couleurs
 
-// Écran destiné à être projeté / affiché plein écran le jour du vote :
-// les parents scannent ce QR au premier lancement de l'app électeur pour
-// que celle-ci découvre automatiquement l'adresse du serveur de l'école
-// (architecture kiosque, Wi-Fi local — cf. ROADMAP).
 @Composable
 fun EcranProjectionQr(port: Int, onRetour: () -> Unit) {
     val adresseIp = remember { adresseIpLocale() }

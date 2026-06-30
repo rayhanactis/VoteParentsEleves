@@ -18,9 +18,6 @@ private fun String.versSlug(): String = lowercase()
     .trim()
     .replace(Regex("\\s+"), "-")
 
-// Identifiant lisible "prenom.nom" (suffixe numérique si collision). Servira
-// de code de connexion électeur, donc doit rester simple à retaper à la main
-// même s'il a aussi vocation à être scanné via QR code.
 fun genererIdentifiantUnique(prenom: String, nom: String, dejaUtilises: Set<String>): String {
     val base = "${prenom.versSlug()}.${nom.versSlug()}".trim('.').ifBlank { "parent" }
     if (base !in dejaUtilises) return base
@@ -31,6 +28,4 @@ fun genererIdentifiantUnique(prenom: String, nom: String, dejaUtilises: Set<Stri
 
 private val random = SecureRandom()
 
-// PIN à 6 chiffres : assez simple à retaper pour un parent non technique,
-// assez d'entropie (10^6) face à 5 essais/min imposés par le rate limit.
 fun genererMotDePasseLisible(): String = random.nextInt(1_000_000).toString().padStart(6, '0')

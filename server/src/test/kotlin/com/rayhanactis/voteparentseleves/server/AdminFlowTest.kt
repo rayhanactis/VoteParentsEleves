@@ -101,7 +101,6 @@ class AdminFlowTest {
         val client = clientJson()
         val admin = tokenAdmin(adminId)
 
-        // 1) Créer le scrutin
         val scrutin = client.post("/scrutins") {
             contentType(ContentType.Application.Json); bearer(admin)
             setBody(CreationScrutin(ecoleId = "ecole-1", dateDebut = 100, dateFin = 200, nbSieges = 8))
@@ -111,7 +110,6 @@ class AdminFlowTest {
         }
         assertEquals(StatutScrutin.Configure, scrutin.statut)
 
-        // 2) Ajouter deux listes
         val listeA = client.post("/scrutins/${scrutin.id}/listes") {
             contentType(ContentType.Application.Json); bearer(admin)
             setBody(CreationListe(
@@ -127,12 +125,10 @@ class AdminFlowTest {
             setBody(CreationListe("Parents Solidaires", listOf(CreationCandidat("Martin", "Bob"))))
         }.body<ListeCandidate>()
 
-        // 3) GET listes (public)
         val listes = client.get("/scrutins/${scrutin.id}/listes").body<List<ListeCandidate>>()
         assertEquals(2, listes.size)
         assertEquals(2, listes.single { it.id == listeA.id }.candidats.size)
 
-        // 4) Importer 3 électeurs
         val electeurs = (1..3).map { i ->
             CreationElecteur(id = "el-$i", nom = "N$i", prenom = "P$i", ecoleId = "ecole-1")
         }
@@ -145,21 +141,17 @@ class AdminFlowTest {
         }
         assertEquals(ResultatImport(3, 0), import)
 
-        // Définir un mot de passe pour chaque électeur (sinon login échoue)
         electeurs.forEach { AuthRepository.definirMotDePasseElecteur(it.id, motDePasseElecteur) }
 
-        // 5) Ouvrir
         val ouvert = client.put("/scrutins/${scrutin.id}/ouvrir") { bearer(admin) }.body<Scrutin>()
         assertEquals(StatutScrutin.Ouvert, ouvert.statut)
 
-        // 6) Une fois ouvert, ajout de liste refusé
         val ajoutTardif = client.post("/scrutins/${scrutin.id}/listes") {
             contentType(ContentType.Application.Json); bearer(admin)
             setBody(CreationListe("Trop tard", listOf(CreationCandidat("X", "Y"))))
         }
         assertEquals(HttpStatusCode.Conflict, ajoutTardif.status)
 
-        // 7) 3 votes (2A, 1B), chaque électeur avec son propre token
         val votes = listOf("el-1" to listeA.id, "el-2" to listeA.id, "el-3" to listeB.id)
         votes.forEach { (electeurId, listeId) ->
             val r = client.post("/scrutins/${scrutin.id}/voter") {
@@ -170,17 +162,14 @@ class AdminFlowTest {
             assertEquals(HttpStatusCode.Created, r.status)
         }
 
-        // 8) Fermer
         val ferme = client.put("/scrutins/${scrutin.id}/fermer") { bearer(admin) }.body<Scrutin>()
         assertEquals(StatutScrutin.Ferme, ferme.statut)
 
-        // 9) Résultats
         val resultat = client.get("/scrutins/${scrutin.id}/resultats").body<ResultatScrutin>()
         assertEquals(mapOf(listeA.id to 2, listeB.id to 1), resultat.resultatsParListe)
         assertEquals(mapOf(listeA.id to 1, listeB.id to 1), resultat.siegesAttribues)
         assertTrue(resultat.procesVerbal.contains("Sièges attribués : 2 / 8"))
 
-        // 10) Dépouillement (verrouille le statut une fois le scrutin clos)
         val depouille = client.put("/scrutins/${scrutin.id}/depouiller") { bearer(admin) }.body<Scrutin>()
         assertEquals(StatutScrutin.Depouille, depouille.statut)
     }
@@ -207,8 +196,8 @@ class AdminFlowTest {
 
         val lignes = listOf(
             LigneElecteurBrute(nom = "Dupont", prenom = "Alice"),
-            LigneElecteurBrute(nom = "Dupont", prenom = "Alice"), // doublon de nom -> suffixe
-            LigneElecteurBrute(nom = "Élève", prenom = "Émilie") // accents -> slug ascii
+            LigneElecteurBrute(nom = "Dupont", prenom = "Alice"),
+            LigneElecteurBrute(nom = "Élève", prenom = "Émilie")
         )
         val generes = client.post("/admin/electeurs/generer") {
             contentType(ContentType.Application.Json); bearer(admin)
@@ -219,13 +208,12 @@ class AdminFlowTest {
         }
 
         assertEquals(3, generes.size)
-        assertEquals(3, generes.map { it.id }.toSet().size) // ids tous uniques
+        assertEquals(3, generes.map { it.id }.toSet().size)
         assertTrue(generes[0].id == "alice.dupont")
         assertTrue(generes[1].id == "alice.dupont2")
         assertTrue(generes[2].id == "emilie.eleve")
         generes.forEach { assertEquals(6, it.motDePasseClair.length) }
 
-        // Le mot de passe en clair renvoyé permet réellement de se logger
         val login = client.post("/auth/login") {
             contentType(ContentType.Application.Json)
             setBody(

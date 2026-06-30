@@ -25,8 +25,6 @@ private fun PDPageContentStream.texte(x: Float, y: Float, taille: Float, police:
     endText()
 }
 
-// Une page A4 par parent : QR scannable + code et mot de passe en clair
-// (seule occasion où ce mot de passe existe en clair — cf. AdminRepository).
 fun genererPdfFichesIdentifiants(
     electeurs: List<ElecteurGenere>,
     nomEcole: String,
@@ -36,9 +34,6 @@ fun genererPdfFichesIdentifiants(
         electeurs.forEach { e ->
             val page = PDPage(PDRectangle.A4)
             doc.addPage(page)
-            // Identifiants valables pour l'école (tous scrutins) : pas de
-            // scrutinId dans le QR. Le login électeur se fait par code + mot
-            // de passe, le scrutin étant déterminé par la connexion au serveur.
             val payload = construireQrIdentifiants(code = e.id, motDePasse = e.motDePasseClair, scrutinId = "")
             val qrImage = genererQrBufferedImage(payload, 500)
             val pdImage = PDImageXObject.createFromByteArray(doc, qrImage.versPng(), "qr-${e.id}")
@@ -62,7 +57,6 @@ fun genererPdfFichesIdentifiants(
     }
 }
 
-// PV de dépouillement : 1 page, nouvelle page si le contenu déborde.
 fun genererPdfProcesVerbal(
     resultat: ResultatScrutin,
     nomScrutin: String,

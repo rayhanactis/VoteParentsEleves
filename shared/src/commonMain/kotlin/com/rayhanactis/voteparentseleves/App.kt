@@ -177,10 +177,6 @@ private fun EcranErreurAcces(message: String, onReessayer: () -> Unit) {
     }
 }
 
-// Salle d'attente : le client est connecté au serveur de l'école mais aucun
-// scrutin n'est encore ouvert. On interroge le serveur toutes les 3 s ; dès
-// qu'un scrutin passe « ouvert », on bascule en « connexion en cours » puis on
-// entre dans le parcours de vote — ainsi tout le monde entre en même temps.
 @Composable
 private fun EcranSalleAttente(
     baseUrl: String,
@@ -197,7 +193,7 @@ private fun EcranSalleAttente(
                 val scrutinOuvert = r.data.firstOrNull { it.statut == StatutScrutin.Ouvert }
                 if (scrutinOuvert != null) {
                     ouvert = true
-                    delay(1200) // laisse voir « Scrutin ouvert, connexion en cours… »
+                    delay(1200)
                     onScrutinOuvert(scrutinOuvert.id)
                     return@LaunchedEffect
                 }
@@ -253,7 +249,6 @@ private fun EcranSalleAttente(
     }
 }
 
-// Emblème « vivant » : un halo qui pulse autour d'un cœur fixe.
 @Composable
 private fun EmblemePulse(accent: Color) {
     val transition = rememberInfiniteTransition(label = "pulse")
@@ -285,8 +280,6 @@ private fun EmblemePulse(accent: Color) {
     }
 }
 
-// Petit emblème décoratif (cercles concentriques aux couleurs de l'app)
-// pour adoucir l'écran d'attente / d'erreur.
 @Composable
 private fun Embleme() {
     Box(
@@ -310,7 +303,6 @@ private fun Embleme() {
     }
 }
 
-// Écran de remerciement affiché quand l'électeur a déjà voté pour ce scrutin.
 @Composable
 private fun EcranDejaVote(onRetourAccueil: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {

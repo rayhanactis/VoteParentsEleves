@@ -15,8 +15,6 @@ sealed class ResultatEmail {
     data class Echec(val raison: String) : ResultatEmail()
 }
 
-// Envoi d'emails via SMTP (STARTTLS). La configuration (host, port, expéditeur,
-// mot de passe d'application) vient des Paramètres établissement.
 object EmailService {
 
     const val SUJET = "Vos identifiants pour l'élection des parents d'élèves"
@@ -24,7 +22,6 @@ object EmailService {
     fun smtpConfigure(p: ParametresEcole): Boolean =
         p.smtpHost.isNotBlank() && p.emailExpediteur.isNotBlank()
 
-    // Bloquant (I/O réseau) : à appeler depuis un contexte Dispatchers.IO.
     fun envoyer(
         config: ParametresEcole,
         destinataire: String,

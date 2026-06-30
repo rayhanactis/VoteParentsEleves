@@ -8,6 +8,5 @@ private object GuideVocalDesactive : GuideVocal {
     override fun arreter() = Unit
 }
 
-// Pas de TTS embarqué pertinent pour la cible JVM (démo desktop/dev).
 @Composable
 actual fun rememberGuideVocal(): GuideVocal = remember { GuideVocalDesactive }

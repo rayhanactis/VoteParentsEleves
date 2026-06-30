@@ -15,9 +15,6 @@ object ScrutinRepository {
             .singleOrNull()
     }
 
-    // Participation en temps réel : électeurs de l'école du scrutin (total),
-    // nombre d'émargés (votants) et horodatage du dernier vote.
-    // Renvoie null si le scrutin est introuvable.
     fun participation(scrutinId: String): ParticipationScrutin? = transaction {
         val ecoleId = ScrutinsTable
             .selectAll()

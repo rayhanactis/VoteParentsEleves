@@ -43,7 +43,6 @@ class BackupRepositoryTest {
         assertTrue(resultatBackup is ResultatSauvegarde.Succes)
         assertTrue(backupFichier.exists() && backupFichier.length() > 0)
 
-        // On modifie la base courante après la sauvegarde...
         transaction {
             ElecteursTable.insert {
                 it[id] = "el-2"; it[nom] = "Martin"; it[prenom] = "Bob"; it[ecoleId] = "ecole-1"
@@ -51,7 +50,6 @@ class BackupRepositoryTest {
         }
         assertEquals(2, transaction { ElecteursTable.selectAll().count() })
 
-        // ... puis on restaure : on doit retrouver l'état au moment de la sauvegarde (1 électeur).
         val resultatRestauration = BackupRepository.restaurer(backupFichier)
         assertEquals(ResultatRestauration.Succes, resultatRestauration)
         assertEquals(1, transaction { ElecteursTable.selectAll().count() })

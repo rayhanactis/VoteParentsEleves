@@ -58,9 +58,6 @@ object JwtIssuer {
 
 fun Application.jwtConfigDepuisEnvironnement(): JwtConfig {
     val cfg = environment.config
-    // Secret explicite en yaml (déploiement avancé) sinon secret généré et
-    // persisté au 1er run (cas par défaut : adminApp Compose Desktop qui
-    // embarque le serveur en code, ou serveur standalone sans yaml.jwt.secret).
     val secretYaml = cfg.tryGetString("jwt.secret")?.takeIf { it.isNotBlank() }
     return JwtConfig(
         secret = secretYaml ?: SecretStore.chargerOuCreer(cheminSecretParDefaut()),

@@ -5,8 +5,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Tailles volontairement grandes : public visé inclut des parents
-// qui lisent peu / mal.
 val AppTypography = Typography(
     displayLarge = TextStyle(fontSize = 48.sp, fontWeight = FontWeight.Black, lineHeight = 56.sp),
     displayMedium = TextStyle(fontSize = 36.sp, fontWeight = FontWeight.Black, lineHeight = 44.sp),

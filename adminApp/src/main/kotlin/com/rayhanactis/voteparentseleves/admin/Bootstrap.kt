@@ -15,11 +15,6 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.netty.NettyApplicationEngine
 
-// Démarre Ktor in-process (même JVM que la fenêtre Compose Desktop).
-// Sert le réseau local de l'école sur 0.0.0.0:port.
-// Pas de yaml chargé — jwtConfigDepuisEnvironnement() utilise ses
-// valeurs par défaut. Le seed démo est appliqué inconditionnellement
-// après le schéma pour que l'admin puisse se logger dès le 1er run.
 fun demarrerServeurEmbarque(
     port: Int = 8080
 ): EmbeddedServer<NettyApplicationEngine, NettyApplicationEngine.Configuration> {
@@ -33,7 +28,6 @@ fun demarrerServeurEmbarque(
         configureAutoHeadResponse()
         configureExposed()
         configureRouting()
-        // Idempotent : no-op si le scrutin démo est déjà présent.
         SeedDemo.executer()
     }
     server.start(wait = false)

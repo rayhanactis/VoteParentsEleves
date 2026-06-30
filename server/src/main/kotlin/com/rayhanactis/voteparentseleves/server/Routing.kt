@@ -337,7 +337,6 @@ fun Route.routesAdmin() {
         call.respond(HttpStatusCode.Created, AdminRepository.genererElecteurs(input.electeurs))
     }
 
-    // === Répertoire des parents d'élèves ===
 
     get("/admin/parents") {
         call.respond(RepertoireRepository.listerParents())
@@ -380,7 +379,6 @@ fun Route.routesAdmin() {
         }
     }
 
-    // === Identifiants : génération + envoi par email ===
 
     post("/admin/parents/envoyer-tous") {
         val params = ParametresRepository.lire()
@@ -456,7 +454,6 @@ fun Route.routesAdmin() {
         }
     }
 
-    // === Paramètres établissement ===
 
     get("/admin/parametres") {
         call.respond(ParametresRepository.lire())

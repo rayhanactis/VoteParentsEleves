@@ -17,7 +17,6 @@ object ParametresRepository {
             .where { ParametresEcoleTable.id eq ID_SINGLETON }
             .singleOrNull()
         if (row == null) {
-            // Initialisation automatique au 1er appel
             ParametresEcoleTable.insert {
                 it[id] = ID_SINGLETON
                 it[nomEcole] = ""
@@ -39,7 +38,6 @@ object ParametresRepository {
     }
 
     fun enregistrer(maj: MiseAJourParametres): ParametresEcole = transaction {
-        // S'assure d'avoir une ligne (idempotent)
         lire()
         ParametresEcoleTable.update({ ParametresEcoleTable.id eq ID_SINGLETON }) {
             it[nomEcole] = maj.nomEcole.trim()

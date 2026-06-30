@@ -3,9 +3,6 @@ package com.rayhanactis.voteparentseleves.admin.fichiers
 import java.awt.FileDialog
 import java.io.File
 
-// java.awt.FileDialog : boîte de dialogue native, sans dépendance
-// supplémentaire pour un outil desktop mono-poste. Appels bloquants —
-// à invoquer depuis un Dispatchers.IO côté appelant.
 fun choisirFichierAOuvrir(titre: String, extension: String? = null): File? {
     val dialog = FileDialog(null as java.awt.Frame?, titre, FileDialog.LOAD)
     if (extension != null) dialog.file = "*.$extension"

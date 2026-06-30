@@ -94,8 +94,6 @@ fun EcranDetailScrutin(
                 EtatDetail.Chargement -> Centre("Chargement du scrutin…", spinner = true)
                 is EtatDetail.Erreur -> CentreErreur(etat.message) { vm.charger(scrutinId) }
                 is EtatDetail.Pret -> {
-                    // Suivi de participation en temps réel : on interroge le
-                    // serveur toutes les 5 s tant que le scrutin est ouvert.
                     if (etat.scrutin.statut == StatutScrutin.Ouvert) {
                         LaunchedEffect(scrutinId) {
                             while (true) {
@@ -230,9 +228,6 @@ private fun Contenu(
     onExporterPv: (ResultatScrutin) -> Unit
 ) {
     val configurable = scrutin.statut == StatutScrutin.Configure
-    // Toute la page scrolle d'un bloc : l'en-tête (infos, actions OUVRIR/FERMER/
-    // DÉPOUILLER, résultats, identifiants) est un item, les listes en sont d'autres.
-    // Évite que le contenu soit coupé quand la fenêtre est courte.
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -264,8 +259,6 @@ private fun Contenu(
                         onExporterPv = { onExporterPv(resultats) }
                     )
                 }
-                // Suppression : tentable à tout statut. Le serveur la refusera
-                // si au moins un bulletin a été déposé (vraie élection).
                 Spacer(Modifier.height(20.dp))
                 BoutonClay(
                     texte = "Supprimer ce scrutin",
@@ -390,7 +383,6 @@ private fun PanneauElectionEnCours(participation: ParticipationScrutin?) {
             .shadow(elevation = 12.dp, shape = shape, ambientColor = Couleurs.VertMenthe.copy(alpha = 0.35f))
             .clip(shape)
     ) {
-        // Backdrop coloré : ce sont ces formes que l'on devine à travers le verre.
         Canvas(modifier = Modifier.matchParentSize()) {
             val w = size.width
             val h = size.height
@@ -405,7 +397,6 @@ private fun PanneauElectionEnCours(participation: ParticipationScrutin?) {
             }
             drawCircle(Couleurs.RosePop.copy(alpha = 0.7f), radius = h * 0.16f, center = Offset(w * 0.48f, h * 0.95f))
         }
-        // Couche "verre dépoli" semi-transparente : laisse transparaître les formes.
         Box(
             modifier = Modifier
                 .matchParentSize()
@@ -416,7 +407,6 @@ private fun PanneauElectionEnCours(participation: ParticipationScrutin?) {
                 )
                 .border(1.5.dp, Color.White.copy(alpha = 0.65f), shape)
         )
-        // Contenu, avec une marge généreuse vis-à-vis des bords.
         Column(modifier = Modifier.padding(horizontal = 30.dp, vertical = 28.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Box(
@@ -455,8 +445,6 @@ private fun PanneauElectionEnCours(participation: ParticipationScrutin?) {
                 Spacer(Modifier.height(16.dp))
                 BarreProgression(fraction = participation.tauxParticipation)
                 Spacer(Modifier.height(16.dp))
-                // Le message « aucun vote » dépend du nombre de votants (et non de
-                // l'horodatage), pour rester cohérent avec le compteur ci-dessus.
                 val dernier = participation.dernierVote
                 val dernierMessage = when {
                     participation.nbVotants == 0 -> "Aucun vote pour l'instant."

@@ -15,8 +15,6 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
-// Données de démo idempotentes. Crée si rien n'existe encore, sinon no-op.
-// IDs alignés avec MockData côté UI pour faciliter le branchement Android.
 object SeedDemo {
     const val SCRUTIN_ID = "scr-demo-2026"
     const val ADMIN_ID = "admin"
@@ -64,7 +62,6 @@ object SeedDemo {
             .empty().not()
         if (dejaPresent) return@transaction
 
-        // Admin
         if (AdminsTable.selectAll().where { AdminsTable.id eq ADMIN_ID }.empty()) {
             AdminsTable.insert {
                 it[id] = ADMIN_ID
@@ -74,7 +71,6 @@ object SeedDemo {
             }
         }
 
-        // Scrutin OUVERT prêt à voter
         ScrutinsTable.insert {
             it[id] = SCRUTIN_ID
             it[ecoleId] = "ecole-demo"
@@ -85,7 +81,6 @@ object SeedDemo {
             it[statut] = StatutScrutin.Ouvert.code()
         }
 
-        // Listes + candidats
         listesDemo.forEach { liste ->
             ListesCandidatesTable.insert {
                 it[id] = liste.id
@@ -104,7 +99,6 @@ object SeedDemo {
             }
         }
 
-        // Électeurs
         electeursDemo.forEach { (electeurId, nomComplet) ->
             ElecteursTable.insert {
                 it[id] = electeurId

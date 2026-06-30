@@ -13,10 +13,6 @@ import androidx.compose.ui.unit.dp
 import com.rayhanactis.voteparentseleves.accessibilite.rememberGuideVocal
 import com.rayhanactis.voteparentseleves.ui.theme.Couleurs
 
-// Bouton "lire à voix haute" présent sur chaque écran du parcours vote
-// (accessibilité parents malvoyants, ROADMAP Phase 4). Volontairement
-// déclenché manuellement plutôt qu'auto-annoncé : pas de détection fiable
-// et multiplateforme de TalkBack/VoiceOver à ce stade.
 @Composable
 fun BoutonLireVoixHaute(texte: String, modifier: Modifier = Modifier) {
     val guideVocal = rememberGuideVocal()

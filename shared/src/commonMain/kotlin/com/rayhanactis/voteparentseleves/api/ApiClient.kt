@@ -66,7 +66,6 @@ class ApiClient(private val baseUrl: String) {
 
     private fun url(chemin: String) = "$baseUrl$chemin"
 
-    // === Auth ===
 
     suspend fun loginElecteur(req: DemandeLoginElecteur): ApiResult<ReponseToken> =
         appel { http.post(url("/auth/login")) { setBody(req) } }
@@ -74,7 +73,6 @@ class ApiClient(private val baseUrl: String) {
     suspend fun loginAdmin(req: DemandeLoginAdmin): ApiResult<ReponseToken> =
         appel { http.post(url("/auth/admin/login")) { setBody(req) } }
 
-    // === Scrutins (lecture publique) ===
 
     suspend fun listerScrutins(): ApiResult<List<Scrutin>> =
         appel { http.get(url("/scrutins")) }
@@ -88,7 +86,6 @@ class ApiClient(private val baseUrl: String) {
     suspend fun lireResultats(scrutinId: String): ApiResult<ResultatScrutin> =
         appel { http.get(url("/scrutins/$scrutinId/resultats")) }
 
-    // === Vote (auth électeur) ===
 
     suspend fun voter(
         token: String,
@@ -105,7 +102,6 @@ class ApiClient(private val baseUrl: String) {
         http.get(url("/scrutins/$scrutinId/mon-vote")) { bearerAuth(token) }
     }
 
-    // === Admin (auth admin) ===
 
     suspend fun creerScrutin(token: String, req: CreationScrutin): ApiResult<Scrutin> = appel {
         http.post(url("/scrutins")) {
@@ -196,7 +192,6 @@ class ApiClient(private val baseUrl: String) {
         }
     }
 
-    // === Répertoire des parents d'élèves ===
 
     suspend fun listerParents(token: String): ApiResult<List<Electeur>> = appel {
         http.get(url("/admin/parents")) { bearerAuth(token) }
@@ -228,22 +223,18 @@ class ApiClient(private val baseUrl: String) {
         http.delete(url("/admin/parents/$parentId")) { bearerAuth(token) }
     }
 
-    // Génère (ou régénère) le mot de passe d'un parent et le renvoie en clair.
     suspend fun genererMotDePasseParent(token: String, parentId: String): ApiResult<IdentifiantsGeneres> = appel {
         http.post(url("/admin/parents/$parentId/mot-de-passe")) { bearerAuth(token) }
     }
 
-    // Régénère le mot de passe d'un parent et le lui envoie par email.
     suspend fun envoyerIdentifiants(token: String, parentId: String): ApiResult<IdentifiantsGeneres> = appel {
         http.post(url("/admin/parents/$parentId/envoyer")) { bearerAuth(token) }
     }
 
-    // Envoie (en régénérant) les identifiants à tous les parents ayant un email.
     suspend fun envoyerIdentifiantsTous(token: String): ApiResult<ResultatEnvoiMasse> = appel {
         http.post(url("/admin/parents/envoyer-tous")) { bearerAuth(token) }
     }
 
-    // === Paramètres établissement ===
 
     suspend fun lireParametres(token: String): ApiResult<ParametresEcole> = appel {
         http.get(url("/admin/parametres")) { bearerAuth(token) }
@@ -259,7 +250,6 @@ class ApiClient(private val baseUrl: String) {
         }
     }
 
-    // --- Helpers ---
 
     private suspend inline fun <reified T> appel(
         bloc: () -> HttpResponse
@@ -271,7 +261,6 @@ class ApiClient(private val baseUrl: String) {
         }
         return if (reponse.status.isSuccess()) {
             try {
-                // 204 No Content : pas de body à parser, on renvoie Unit (cast safe).
                 if (reponse.status == HttpStatusCode.NoContent) {
                     @Suppress("UNCHECKED_CAST")
                     ApiResult.Succes(Unit as T)

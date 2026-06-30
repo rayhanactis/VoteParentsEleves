@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class DemandeVote(
-    val listeCandidateId: String? = null // null = vote blanc
+    val listeCandidateId: String? = null
 )
 
 @Serializable

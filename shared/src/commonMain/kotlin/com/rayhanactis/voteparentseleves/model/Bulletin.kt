@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class Bulletin(
     val id: String,
     val scrutinId: String,
-    val listeCandidateId: String? = null // null = vote blanc
+    val listeCandidateId: String? = null
 )

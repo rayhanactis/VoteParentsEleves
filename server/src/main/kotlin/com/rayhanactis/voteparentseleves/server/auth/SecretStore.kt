@@ -4,9 +4,6 @@ import java.io.File
 import java.security.SecureRandom
 import java.util.Base64
 
-// Génère un secret JWT aléatoire au premier démarrage et le persiste dans un
-// fichier local (un par poste école), pour ne plus dépendre d'un secret en
-// dur dans le code. Les démarrages suivants relisent le même fichier.
 object SecretStore {
     private val random = SecureRandom()
 

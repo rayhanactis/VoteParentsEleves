@@ -70,7 +70,6 @@ fun EcranCreationListe(
         }
     }
 
-    // Charger le répertoire pour autocompléter la sélection des candidats.
     var parents by remember { mutableStateOf<List<Electeur>>(emptyList()) }
     var erreurRepertoire by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(Unit) {

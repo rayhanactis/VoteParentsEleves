@@ -252,7 +252,6 @@ private fun Formulaire(
                 color = Couleurs.GrisDoux
             )
 
-            // --- Envoi des emails (SMTP) ---
             Text(
                 text = "Envoi des emails (identifiants des parents)",
                 style = MaterialTheme.typography.headlineMedium,

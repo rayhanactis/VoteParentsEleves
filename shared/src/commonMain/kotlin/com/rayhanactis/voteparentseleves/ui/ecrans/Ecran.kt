@@ -17,7 +17,6 @@ sealed class Ecran {
         val choix: ChoixVote
     ) : Ecran()
     data class Recu(val bulletinId: String, val nomListe: String?) : Ecran()
-    // L'électeur a déjà voté pour ce scrutin : écran de remerciement.
     data object DejaVote : Ecran()
 }
 

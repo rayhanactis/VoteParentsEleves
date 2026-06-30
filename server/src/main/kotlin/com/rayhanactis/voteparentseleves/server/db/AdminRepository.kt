@@ -35,8 +35,6 @@ sealed class ChangementStatutResultat {
     data class Succes(val scrutin: Scrutin) : ChangementStatutResultat()
     data object ScrutinInconnu : ChangementStatutResultat()
     data class TransitionInterdite(val actuel: StatutScrutin) : ChangementStatutResultat()
-    // Un seul scrutin peut être ouvert au vote à la fois (les électeurs sont
-    // dirigés automatiquement vers l'unique scrutin ouvert).
     data class AutreScrutinOuvert(val nomAutre: String) : ChangementStatutResultat()
 }
 
@@ -68,8 +66,6 @@ object AdminRepository {
     )
 
     fun creerScrutin(input: CreationScrutin): Scrutin = transaction {
-        // Si l'UI n'a pas fourni d'ecoleId, on prend celui des paramètres
-        // établissement (une seule école par instance d'app admin).
         val ecoleEffective = input.ecoleId.ifBlank { ParametresRepository.codeEcoleActuel() }
         val nouveau = Scrutin(
             id = "scr-${UUID.randomUUID()}",
@@ -110,12 +106,6 @@ object AdminRepository {
             .empty().not()
         if (!existe) return@transaction SuppressionResultat.Introuvable
 
-        // Règle métier : la suppression est autorisée tant qu'aucun
-        // bulletin n'a été déposé. Une fois qu'au moins un parent a voté,
-        // le scrutin devient une trace d'élection réelle et n'est plus
-        // effaçable (préservation de l'intégrité). Cela couvre les essais
-        // (avant ouverture OU ouverts puis fermés sans vote) ET interdit
-        // l'effacement d'élections ayant eu lieu, quel que soit le statut.
         val nbBulletins = BulletinsTable.selectAll()
             .where { BulletinsTable.scrutinId eq scrutinId }
             .count()
@@ -125,7 +115,6 @@ object AdminRepository {
             )
         }
 
-        // Cascade : émargements (au cas où) → candidats → listes → scrutin.
         EmargementsTable.deleteWhere { EmargementsTable.scrutinId eq scrutinId }
         val listesIds = ListesCandidatesTable.selectAll()
             .where { ListesCandidatesTable.scrutinId eq scrutinId }
@@ -350,7 +339,6 @@ object AdminRepository {
             return@transaction ChangementStatutResultat.TransitionInterdite(scrutin.statut)
         }
 
-        // Contrainte : au plus un scrutin ouvert à la fois.
         if (vers == StatutScrutin.Ouvert) {
             val autreOuvert = ScrutinsTable.selectAll()
                 .where { ScrutinsTable.statut eq StatutScrutin.Ouvert.code() }
@@ -388,10 +376,6 @@ object AdminRepository {
         ResultatImport(ajoutes = aInserer.size, ignores = aIgnorer.size)
     }
 
-    // Génère un identifiant + mot de passe pour chaque ligne (nom, prénom),
-    // les hache et les insère, et renvoie les mots de passe en clair (seule
-    // occasion où ils existeront en clair côté serveur) pour impression
-    // QR/PDF par l'admin.
     fun genererElecteurs(lignes: List<LigneElecteurBrute>): List<ElecteurGenere> = transaction {
         if (lignes.isEmpty()) return@transaction emptyList()
         val ecoleId = ParametresRepository.codeEcoleActuel()

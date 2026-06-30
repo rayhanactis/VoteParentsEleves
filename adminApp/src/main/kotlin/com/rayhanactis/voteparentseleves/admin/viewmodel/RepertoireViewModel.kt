@@ -22,7 +22,6 @@ class RepertoireViewModel(
 
     var recherche by mutableStateOf("")
 
-    // Envoi groupé des identifiants à tous les parents (par email).
     var etatEnvoiTous by mutableStateOf<EtatEnvoiTous>(EtatEnvoiTous.Inactif)
         private set
 

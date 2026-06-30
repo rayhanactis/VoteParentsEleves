@@ -49,7 +49,6 @@ class CreationScrutinViewModel(
             val r = api.creerScrutin(
                 token,
                 CreationScrutinDto(
-                    // ecoleId vide → le serveur prend celui des Paramètres établissement
                     ecoleId = "",
                     nom = nom.trim(),
                     dateDebut = debutMs,

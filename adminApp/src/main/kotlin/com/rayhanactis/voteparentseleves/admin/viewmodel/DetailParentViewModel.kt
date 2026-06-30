@@ -19,8 +19,6 @@ class DetailParentViewModel(
     var etat by mutableStateOf<EtatDetailParent>(EtatDetailParent.Chargement)
         private set
 
-    // Mot de passe en clair généré pendant cette session (non restocké côté
-    // serveur : seulement le hash). Null = aucun mot de passe affichable.
     var motDePasseGenere by mutableStateOf<String?>(null)
         private set
 

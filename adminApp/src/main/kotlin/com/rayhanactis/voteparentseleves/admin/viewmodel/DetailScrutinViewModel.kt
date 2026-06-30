@@ -25,9 +25,6 @@ class DetailScrutinViewModel(
     var actionEnCours by mutableStateOf(false)
         private set
 
-    // Participation en temps réel (rafraîchie en boucle par l'écran quand le
-    // scrutin est ouvert). On conserve la dernière valeur connue en cas
-    // d'erreur réseau passagère pour éviter le clignotement.
     var participation by mutableStateOf<ParticipationScrutin?>(null)
         private set
 

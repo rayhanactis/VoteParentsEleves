@@ -1,9 +1,5 @@
 package com.rayhanactis.voteparentseleves.ui.mock
 
-// Configuration côté client purement présentationnelle (l'API renvoie
-// désormais les vraies listes et candidats). Les "professions de foi"
-// ne sont pas (encore) stockées en base : on les conserve client-side
-// indexées par listeId et complètent les données API à l'affichage.
 object MockData {
     const val SCRUTIN_ID = "scr-demo-2026"
     const val ECOLE_NOM = "École Jean-Moulin"

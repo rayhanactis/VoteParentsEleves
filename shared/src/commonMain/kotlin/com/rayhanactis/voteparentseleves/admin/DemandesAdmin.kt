@@ -28,8 +28,6 @@ data class CreationListe(
 data class CreationCandidat(
     val nom: String,
     val prenom: String,
-    // Optionnel : lien vers le parent du répertoire (renseigné quand le
-    // candidat est sélectionné depuis le répertoire plutôt que saisi à la main).
     val electeurId: String? = null
 )
 
@@ -58,15 +56,12 @@ data class MiseAJourParametres(
     val smtpMotDePasse: String = ""
 )
 
-// Identifiants fraîchement générés pour un parent (mot de passe en clair :
-// renvoyé une seule fois, à l'instant de la génération — non restocké).
 @Serializable
 data class IdentifiantsGeneres(
     val identifiant: String,
     val motDePasseClair: String
 )
 
-// Bilan d'un envoi groupé des identifiants à tous les parents.
 @Serializable
 data class ResultatEnvoiMasse(
     val envoyes: Int,
@@ -93,7 +88,6 @@ data class ResultatImport(
     val ignores: Int
 )
 
-// Génération auto d'identifiants + mots de passe (import CSV nom/prénom).
 @Serializable
 data class LigneElecteurBrute(
     val nom: String,
@@ -110,8 +104,6 @@ data class ElecteurGenere(
     val id: String,
     val nom: String,
     val prenom: String,
-    // Mot de passe en clair : présent uniquement dans cette réponse de
-    // génération (pour impression QR/PDF). Jamais renvoyé ni stocké ensuite.
     val motDePasseClair: String,
     val ecoleId: String
 )

@@ -25,8 +25,6 @@ fun Application.configureExposed() {
     DbHolder.initialiser(dbFile)
 
     transaction {
-        // createMissingTablesAndColumns gère aussi les migrations légères
-        // (ex: ajout de la colonne `nom` aux scrutins déjà créés).
         SchemaUtils.createMissingTablesAndColumns(
             ElecteursTable,
             AdminsTable,
@@ -46,9 +44,6 @@ fun Application.configureExposed() {
     appliquerSeedSiDemande()
 }
 
-// Référence le pool de connexions courant pour permettre une restauration
-// à chaud (Backup/Restore) : fermer l'ancien pool, copier le fichier
-// restauré à la place du fichier courant, rouvrir un pool dessus.
 object DbHolder {
     private val dbFileRef = AtomicReference<File>()
     private val dataSourceRef = AtomicReference<HikariDataSource>()
@@ -73,9 +68,6 @@ object DbHolder {
     }
 }
 
-// SQLite + WAL + HikariCP : 1 writer + N readers concurrents, pas de
-// blocage des lectures pendant les écritures, busy_timeout pour absorber
-// les rares conflits côté pool.
 private fun creerPoolSqlite(dbFile: File): HikariDataSource {
     val sqliteDataSource = SQLiteDataSource(
         SQLiteConfig().apply {
@@ -92,8 +84,6 @@ private fun creerPoolSqlite(dbFile: File): HikariDataSource {
     val hikariConfig = HikariConfig().apply {
         dataSource = sqliteDataSource
         poolName = "voteparentseleves-sqlite"
-        // SQLite n'autorise qu'un writer à la fois : trop de connexions
-        // n'apporte rien sur les writes mais aide les readers WAL.
         maximumPoolSize = 5
         minimumIdle = 1
         connectionTestQuery = "SELECT 1"

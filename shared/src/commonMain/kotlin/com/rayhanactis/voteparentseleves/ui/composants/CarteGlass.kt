@@ -14,10 +14,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-// Carte glassmorphique (faux verre dépoli) : fond blanc semi-transparent
-// + bordure claire + ombre douce. Sans backdrop-blur natif (pour rester
-// compatible Wasm/anciennes plateformes), on s'appuie sur la composition
-// sur fond coloré pour faire passer la sensation "verre".
 @Composable
 fun CarteGlass(
     modifier: Modifier = Modifier,
@@ -52,7 +48,6 @@ fun CarteGlass(
             .padding(contenuPadding)
     ) {
         if (couleurAccent != null) {
-            // Petite barre d'accent en haut, marque la liste / l'écran
             Box(
                 modifier = Modifier
                     .background(couleurAccent, shape = RoundedCornerShape(percent = 50))
@@ -62,8 +57,6 @@ fun CarteGlass(
     }
 }
 
-// Variante surface "pleine" plus opaque (utile pour mettre du contenu
-// par-dessus le fond Kandinsky sans tout voir au travers).
 @Composable
 fun CartePleine(
     modifier: Modifier = Modifier,

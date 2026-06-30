@@ -3,9 +3,6 @@ package com.rayhanactis.voteparentseleves.qr
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
-// Format des deux types de QR codes utilisés par l'app :
-//  - Découverte serveur (projeté par adminApp) : "vpe-serveur:http://192.168.x.x:8080"
-//  - Identifiants électeur (imprimés sur la fiche PDF) : JSON {"type":"vpe-identifiants",...}
 sealed class QrPayload {
     data class DecouverteServeur(val baseUrl: String) : QrPayload()
     data class Identifiants(val code: String, val motDePasse: String, val scrutinId: String) : QrPayload()

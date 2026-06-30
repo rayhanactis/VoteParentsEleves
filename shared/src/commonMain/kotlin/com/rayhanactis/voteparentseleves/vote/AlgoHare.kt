@@ -48,8 +48,6 @@ object AlgoHare : AlgorithmeVote {
         val totalExprimes = resultatsParListe.values.sum()
         val quotient = totalExprimes / nbSieges
 
-        // Cas dégénéré : moins de suffrages exprimés que de sièges.
-        // Répartition par plus forts restes en utilisant directement les voix.
         if (quotient == 0) {
             return repartirAuPlusFortReste(
                 siegesInitiaux = resultatsParListe.mapValues { 0 },
@@ -76,8 +74,6 @@ object AlgoHare : AlgorithmeVote {
         )
     }
 
-    // Plus fort reste : on trie par reste décroissant, puis par voix totales
-    // décroissantes (départage légal), puis par id de liste pour déterminisme.
     private fun repartirAuPlusFortReste(
         siegesInitiaux: Map<String, Int>,
         restes: Map<String, Int>,

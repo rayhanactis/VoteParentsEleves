@@ -8,6 +8,5 @@ private object GuideVocalDesactive : GuideVocal {
     override fun arreter() = Unit
 }
 
-// Démo navigateur (Wasm) : pas de TTS câblé.
 @Composable
 actual fun rememberGuideVocal(): GuideVocal = remember { GuideVocalDesactive }
