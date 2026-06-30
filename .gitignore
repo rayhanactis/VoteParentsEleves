@@ -27,3 +27,7 @@ node_modules/
 .claude/
 CLAUDE_SESSION_LOG.txt
 screenshot_*.png
+
+# Docs de travail interne (hors livrable)
+CLAUDE.md
+ROADMAP.md
