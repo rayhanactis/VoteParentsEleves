@@ -32,6 +32,10 @@ object ScrutinsTable : Table("scrutins") {
     val nbSieges = integer("nb_sieges")
     val statut = varchar("statut", 20)
 
+    // true = ouverture/fermeture pilotées automatiquement par les dates (scrutin
+    // programmé). false = piloté manuellement (jamais fermé automatiquement).
+    val programme = bool("programme").default(false)
+
     override val primaryKey = PrimaryKey(id)
 }
 

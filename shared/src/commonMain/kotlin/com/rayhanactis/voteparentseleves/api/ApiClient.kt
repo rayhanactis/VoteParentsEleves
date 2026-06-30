@@ -129,6 +129,14 @@ class ApiClient(private val baseUrl: String) {
         http.put(url("/scrutins/$scrutinId/fermer")) { bearerAuth(token) }
     }
 
+    suspend fun programmerScrutin(token: String, scrutinId: String): ApiResult<Scrutin> = appel {
+        http.put(url("/scrutins/$scrutinId/programmer")) { bearerAuth(token) }
+    }
+
+    suspend fun deprogrammerScrutin(token: String, scrutinId: String): ApiResult<Scrutin> = appel {
+        http.put(url("/scrutins/$scrutinId/deprogrammer")) { bearerAuth(token) }
+    }
+
     suspend fun importerElecteurs(
         token: String,
         electeurs: List<CreationElecteur>

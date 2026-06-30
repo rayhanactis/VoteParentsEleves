@@ -36,6 +36,7 @@ sealed class ChangementStatutResultat {
     data object ScrutinInconnu : ChangementStatutResultat()
     data class TransitionInterdite(val actuel: StatutScrutin) : ChangementStatutResultat()
     data class AutreScrutinOuvert(val nomAutre: String) : ChangementStatutResultat()
+    data object AucuneListe : ChangementStatutResultat()
 }
 
 sealed class SuppressionResultat {
@@ -211,15 +212,111 @@ object AdminRepository {
         )
     }
 
-    fun listerScrutins(): List<Scrutin> = transaction {
-        ScrutinsTable.selectAll().map(::rowToScrutin)
+    fun listerScrutins(): List<Scrutin> {
+        reconcilierStatuts()
+        return transaction { ScrutinsTable.selectAll().map(::rowToScrutin) }
     }
 
-    fun lireScrutin(scrutinId: String): Scrutin? = transaction {
-        ScrutinsTable.selectAll()
+    fun lireScrutin(scrutinId: String): Scrutin? {
+        reconcilierStatuts()
+        return transaction {
+            ScrutinsTable.selectAll()
+                .where { ScrutinsTable.id eq scrutinId }
+                .map(::rowToScrutin)
+                .singleOrNull()
+        }
+    }
+
+    /**
+     * Recale les statuts pilotés par les dates (scrutins programmés). Idempotent.
+     * Un scrutin `Programme` s'ouvre à `dateDebut` et se ferme à `dateFin` ;
+     * un scrutin `Ouvert` se ferme à `dateFin`. Appelée à chaque lecture et par
+     * le ticker périodique : robuste même si le poste était éteint à l'heure dite,
+     * car le statut se recale dès la première lecture après rallumage.
+     */
+    fun reconcilierStatuts(now: Long = System.currentTimeMillis()) = transaction {
+        ScrutinsTable.selectAll().forEach { row ->
+            // Seuls les scrutins programmés sont pilotés par les dates ; les scrutins
+            // ouverts/fermés manuellement gardent le statut décidé par l'admin.
+            if (!row[ScrutinsTable.programme]) return@forEach
+            val statutActuel = statutDepuisCode(row[ScrutinsTable.statut]) ?: return@forEach
+            val dateDebut = row[ScrutinsTable.dateDebut]
+            val dateFin = row[ScrutinsTable.dateFin]
+            val cible = when (statutActuel) {
+                StatutScrutin.Programme -> when {
+                    now >= dateFin -> StatutScrutin.Ferme
+                    now >= dateDebut -> StatutScrutin.Ouvert
+                    else -> null
+                }
+                StatutScrutin.Ouvert -> if (now >= dateFin) StatutScrutin.Ferme else null
+                else -> null
+            }
+            if (cible != null && cible != statutActuel) {
+                ScrutinsTable.update({ ScrutinsTable.id eq row[ScrutinsTable.id] }) {
+                    it[statut] = cible.code()
+                }
+            }
+        }
+    }
+
+    /**
+     * Arme l'ouverture programmée d'un scrutin en cours de configuration.
+     * Refuse si le scrutin n'a aucune liste candidate (ouverture à vide).
+     * Si `dateDebut` est déjà passée, ouvre immédiatement (équivaut à « Ouvrir »).
+     */
+    fun programmer(
+        scrutinId: String,
+        now: Long = System.currentTimeMillis()
+    ): ChangementStatutResultat = transaction {
+        val scrutin = ScrutinsTable.selectAll()
             .where { ScrutinsTable.id eq scrutinId }
             .map(::rowToScrutin)
-            .singleOrNull()
+            .singleOrNull() ?: return@transaction ChangementStatutResultat.ScrutinInconnu
+
+        if (scrutin.statut != StatutScrutin.Configure) {
+            return@transaction ChangementStatutResultat.TransitionInterdite(scrutin.statut)
+        }
+
+        val aDesListes = ListesCandidatesTable.selectAll()
+            .where { ListesCandidatesTable.scrutinId eq scrutinId }
+            .empty().not()
+        if (!aDesListes) return@transaction ChangementStatutResultat.AucuneListe
+
+        val ouvertureImmediate = now >= scrutin.dateDebut && now < scrutin.dateFin
+        if (ouvertureImmediate) {
+            val autreOuvert = ScrutinsTable.selectAll()
+                .where { ScrutinsTable.statut eq StatutScrutin.Ouvert.code() }
+                .map(::rowToScrutin)
+                .firstOrNull { it.id != scrutinId }
+            if (autreOuvert != null) {
+                return@transaction ChangementStatutResultat.AutreScrutinOuvert(
+                    autreOuvert.nom.ifBlank { autreOuvert.id }
+                )
+            }
+        }
+        val cible = if (ouvertureImmediate) StatutScrutin.Ouvert else StatutScrutin.Programme
+        ScrutinsTable.update({ ScrutinsTable.id eq scrutinId }) {
+            it[statut] = cible.code()
+            it[programme] = true
+        }
+        ChangementStatutResultat.Succes(scrutin.copy(statut = cible))
+    }
+
+    /** Repasse un scrutin `Programme` en `Configure` (pour ré-éditer les listes). */
+    fun annulerProgrammation(scrutinId: String): ChangementStatutResultat = transaction {
+        val scrutin = ScrutinsTable.selectAll()
+            .where { ScrutinsTable.id eq scrutinId }
+            .map(::rowToScrutin)
+            .singleOrNull() ?: return@transaction ChangementStatutResultat.ScrutinInconnu
+
+        if (scrutin.statut != StatutScrutin.Programme) {
+            return@transaction ChangementStatutResultat.TransitionInterdite(scrutin.statut)
+        }
+        ScrutinsTable.update({ ScrutinsTable.id eq scrutinId }) {
+            it[statut] = StatutScrutin.Configure.code()
+            it[programme] = false
+        }
+        ChangementStatutResultat.Succes(scrutin.copy(statut = StatutScrutin.Configure))
     }
 
     fun listerListes(scrutinId: String): List<ListeCandidate>? = transaction {

@@ -4,6 +4,7 @@ import com.rayhanactis.voteparentseleves.server.SeedDemo
 import com.rayhanactis.voteparentseleves.server.configureAutoHeadResponse
 import com.rayhanactis.voteparentseleves.server.configureExposed
 import com.rayhanactis.voteparentseleves.server.configureHttp
+import com.rayhanactis.voteparentseleves.server.configurePlanification
 import com.rayhanactis.voteparentseleves.server.configureMonitoring
 import com.rayhanactis.voteparentseleves.server.configureResources
 import com.rayhanactis.voteparentseleves.server.configureRouting
@@ -28,6 +29,7 @@ fun demarrerServeurEmbarque(
         configureAutoHeadResponse()
         configureExposed()
         configureRouting()
+        configurePlanification()
         SeedDemo.executer()
     }
     server.start(wait = false)

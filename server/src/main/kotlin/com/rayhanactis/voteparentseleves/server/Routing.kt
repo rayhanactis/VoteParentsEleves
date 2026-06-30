@@ -139,6 +139,7 @@ fun Route.routesVote() {
             call.respond(HttpStatusCode.BadRequest, "Corps de requête invalide")
             return@post
         }
+        AdminRepository.reconcilierStatuts()
         when (val r = VoteRepository.deposer(
             scrutinId = scrutinId,
             electeurId = electeurId,
@@ -199,7 +200,6 @@ fun Route.routesScrutinAdmin() {
     post("/scrutins") {
         val input = runCatching { call.receive<CreationScrutin>() }.getOrNull()
         if (input == null ||
-            input.ecoleId.isBlank() ||
             input.nbSieges < 1 ||
             input.dateDebut > input.dateFin
         ) {
@@ -246,6 +246,14 @@ fun Route.routesScrutinAdmin() {
     put("/scrutins/{id}/depouiller") {
         transitionScrutin(call.parameters["id"].orEmpty(), StatutScrutin.Ferme, StatutScrutin.Depouille)
     }
+    put("/scrutins/{id}/programmer") {
+        val id = call.parameters["id"].orEmpty()
+        repondreChangementStatut(AdminRepository.programmer(id), id)
+    }
+    put("/scrutins/{id}/deprogrammer") {
+        val id = call.parameters["id"].orEmpty()
+        repondreChangementStatut(AdminRepository.annulerProgrammation(id), id)
+    }
 
     patch("/scrutins/{id}") {
         val id = call.parameters["id"].orEmpty()
@@ -259,7 +267,8 @@ fun Route.routesScrutinAdmin() {
             ChangementStatutResultat.ScrutinInconnu ->
                 call.respond(HttpStatusCode.NotFound, "Scrutin '$id' introuvable")
             is ChangementStatutResultat.TransitionInterdite,
-            is ChangementStatutResultat.AutreScrutinOuvert ->
+            is ChangementStatutResultat.AutreScrutinOuvert,
+            ChangementStatutResultat.AucuneListe ->
                 call.respond(HttpStatusCode.Conflict, "Transition interdite")
         }
     }
@@ -489,19 +498,31 @@ private suspend fun RoutingContext.transitionScrutin(
     depuis: StatutScrutin,
     vers: StatutScrutin
 ) {
-    when (val r = AdminRepository.changerStatut(scrutinId, depuis, vers)) {
+    repondreChangementStatut(AdminRepository.changerStatut(scrutinId, depuis, vers), scrutinId)
+}
+
+private suspend fun RoutingContext.repondreChangementStatut(
+    r: ChangementStatutResultat,
+    scrutinId: String
+) {
+    when (r) {
         is ChangementStatutResultat.Succes -> call.respond(r.scrutin)
         ChangementStatutResultat.ScrutinInconnu ->
             call.respond(HttpStatusCode.NotFound, "Scrutin '$scrutinId' introuvable")
         is ChangementStatutResultat.TransitionInterdite ->
             call.respond(
                 HttpStatusCode.Conflict,
-                "Transition refusée : statut actuel ${r.actuel.javaClass.simpleName}, attendu ${depuis.javaClass.simpleName}"
+                "Transition refusée : statut actuel ${r.actuel.javaClass.simpleName}"
             )
         is ChangementStatutResultat.AutreScrutinOuvert ->
             call.respond(
                 HttpStatusCode.Conflict,
                 "Un autre scrutin est déjà ouvert (${r.nomAutre}). Fermez-le avant d'en ouvrir un autre."
+            )
+        ChangementStatutResultat.AucuneListe ->
+            call.respond(
+                HttpStatusCode.Conflict,
+                "Ajoutez au moins une liste candidate avant de programmer l'ouverture."
             )
     }
 }

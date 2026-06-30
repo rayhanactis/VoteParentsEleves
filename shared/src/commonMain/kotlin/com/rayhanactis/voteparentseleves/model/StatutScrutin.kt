@@ -11,6 +11,7 @@ import kotlinx.serialization.encoding.Encoder
 @Serializable(with = StatutScrutinSerializer::class)
 sealed class StatutScrutin {
     data object Configure : StatutScrutin()
+    data object Programme : StatutScrutin()
     data object Ouvert : StatutScrutin()
     data object Ferme : StatutScrutin()
     data object Depouille : StatutScrutin()
@@ -18,6 +19,7 @@ sealed class StatutScrutin {
 
 fun StatutScrutin.code(): String = when (this) {
     StatutScrutin.Configure -> "Configure"
+    StatutScrutin.Programme -> "Programme"
     StatutScrutin.Ouvert -> "Ouvert"
     StatutScrutin.Ferme -> "Ferme"
     StatutScrutin.Depouille -> "Depouille"
@@ -25,6 +27,7 @@ fun StatutScrutin.code(): String = when (this) {
 
 fun statutDepuisCode(code: String): StatutScrutin? = when (code) {
     "Configure" -> StatutScrutin.Configure
+    "Programme" -> StatutScrutin.Programme
     "Ouvert" -> StatutScrutin.Ouvert
     "Ferme" -> StatutScrutin.Ferme
     "Depouille" -> StatutScrutin.Depouille

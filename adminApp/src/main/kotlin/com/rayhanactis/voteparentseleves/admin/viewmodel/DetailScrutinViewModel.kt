@@ -56,6 +56,14 @@ class DetailScrutinViewModel(
         api.fermerScrutin(token, scrutinId)
     }
 
+    fun programmer(scrutinId: String) = avecAction(scrutinId) {
+        api.programmerScrutin(token, scrutinId)
+    }
+
+    fun annulerProgrammation(scrutinId: String) = avecAction(scrutinId) {
+        api.deprogrammerScrutin(token, scrutinId)
+    }
+
     fun depouiller(scrutinId: String) = avecAction(scrutinId) {
         api.depouillerScrutin(token, scrutinId)
     }

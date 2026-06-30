@@ -250,6 +250,71 @@ class AdminFlowTest {
     }
 
     @Test
+    fun `scrutin programme pour le futur refuse le vote avant ouverture`() = testApplication {
+        appSousTest()
+        val client = clientJson()
+        val admin = tokenAdmin(adminId)
+        val futur = System.currentTimeMillis() + 10 * 3_600_000L
+
+        val scrutin = client.post("/scrutins") {
+            contentType(ContentType.Application.Json); bearer(admin)
+            setBody(CreationScrutin("ecole-1", dateDebut = futur, dateFin = futur + 3_600_000L, nbSieges = 3))
+        }.body<Scrutin>()
+
+        client.post("/scrutins/${scrutin.id}/listes") {
+            contentType(ContentType.Application.Json); bearer(admin)
+            setBody(CreationListe("Liste A", listOf(CreationCandidat("Dupont", "Alice"))))
+        }
+
+        val programme = client.put("/scrutins/${scrutin.id}/programmer") { bearer(admin) }.let {
+            assertEquals(HttpStatusCode.OK, it.status)
+            it.body<Scrutin>()
+        }
+        assertEquals(StatutScrutin.Programme, programme.statut)
+
+        val vote = client.post("/scrutins/${scrutin.id}/voter") {
+            contentType(ContentType.Application.Json)
+            bearer(tokenElecteur("el-x", scrutin.id))
+            setBody(DemandeVote(listeCandidateId = null))
+        }
+        assertEquals(HttpStatusCode.Conflict, vote.status)
+    }
+
+    @Test
+    fun `programmer sans liste candidate retourne 409`() = testApplication {
+        appSousTest()
+        val client = clientJson()
+        val admin = tokenAdmin(adminId)
+        val futur = System.currentTimeMillis() + 3_600_000L
+        val scrutin = client.post("/scrutins") {
+            contentType(ContentType.Application.Json); bearer(admin)
+            setBody(CreationScrutin("ecole-1", futur, futur + 3_600_000L, 3))
+        }.body<Scrutin>()
+
+        val r = client.put("/scrutins/${scrutin.id}/programmer") { bearer(admin) }
+        assertEquals(HttpStatusCode.Conflict, r.status)
+    }
+
+    @Test
+    fun `programmer avec date de debut passee ouvre immediatement`() = testApplication {
+        appSousTest()
+        val client = clientJson()
+        val admin = tokenAdmin(adminId)
+        val now = System.currentTimeMillis()
+        val scrutin = client.post("/scrutins") {
+            contentType(ContentType.Application.Json); bearer(admin)
+            setBody(CreationScrutin("ecole-1", dateDebut = now - 3_600_000L, dateFin = now + 3_600_000L, nbSieges = 3))
+        }.body<Scrutin>()
+        client.post("/scrutins/${scrutin.id}/listes") {
+            contentType(ContentType.Application.Json); bearer(admin)
+            setBody(CreationListe("Liste A", listOf(CreationCandidat("Dupont", "Alice"))))
+        }
+
+        val r = client.put("/scrutins/${scrutin.id}/programmer") { bearer(admin) }.body<Scrutin>()
+        assertEquals(StatutScrutin.Ouvert, r.statut)
+    }
+
+    @Test
     fun `fermer un scrutin non ouvert retourne 409`() = testApplication {
         appSousTest()
         val client = clientJson()
