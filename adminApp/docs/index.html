@@ -718,14 +718,23 @@
                     <li data-group="Default" data-name="adminParametresPut" class="">
                       <a href="#api-Default-adminParametresPut">adminParametresPut</a>
                     </li>
+                    <li data-group="Default" data-name="adminParentsEnvoyerTousPost" class="">
+                      <a href="#api-Default-adminParentsEnvoyerTousPost">adminParentsEnvoyerTousPost</a>
+                    </li>
                     <li data-group="Default" data-name="adminParentsGet" class="">
                       <a href="#api-Default-adminParentsGet">adminParentsGet</a>
                     </li>
                     <li data-group="Default" data-name="adminParentsIdDelete" class="">
                       <a href="#api-Default-adminParentsIdDelete">adminParentsIdDelete</a>
                     </li>
+                    <li data-group="Default" data-name="adminParentsIdEnvoyerPost" class="">
+                      <a href="#api-Default-adminParentsIdEnvoyerPost">adminParentsIdEnvoyerPost</a>
+                    </li>
                     <li data-group="Default" data-name="adminParentsIdGet" class="">
                       <a href="#api-Default-adminParentsIdGet">adminParentsIdGet</a>
+                    </li>
+                    <li data-group="Default" data-name="adminParentsIdMotDePassePost" class="">
+                      <a href="#api-Default-adminParentsIdMotDePassePost">adminParentsIdMotDePassePost</a>
                     </li>
                     <li data-group="Default" data-name="adminParentsIdPut" class="">
                       <a href="#api-Default-adminParentsIdPut">adminParentsIdPut</a>
@@ -750,6 +759,9 @@
                     </li>
                     <li data-group="Default" data-name="scrutinsIdDepouillerPut" class="">
                       <a href="#api-Default-scrutinsIdDepouillerPut">scrutinsIdDepouillerPut</a>
+                    </li>
+                    <li data-group="Default" data-name="scrutinsIdDeprogrammerPut" class="">
+                      <a href="#api-Default-scrutinsIdDeprogrammerPut">scrutinsIdDeprogrammerPut</a>
                     </li>
                     <li data-group="Default" data-name="scrutinsIdFermerPut" class="">
                       <a href="#api-Default-scrutinsIdFermerPut">scrutinsIdFermerPut</a>
@@ -780,6 +792,9 @@
                     </li>
                     <li data-group="Default" data-name="scrutinsIdPatch" class="">
                       <a href="#api-Default-scrutinsIdPatch">scrutinsIdPatch</a>
+                    </li>
+                    <li data-group="Default" data-name="scrutinsIdProgrammerPut" class="">
+                      <a href="#api-Default-scrutinsIdProgrammerPut">scrutinsIdProgrammerPut</a>
                     </li>
                     <li data-group="Default" data-name="scrutinsIdResultatsGet" class="">
                       <a href="#api-Default-scrutinsIdResultatsGet">scrutinsIdResultatsGet</a>
@@ -1639,6 +1654,213 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
+                    <div id="api-Default-adminParentsEnvoyerTousPost">
+                      <article id="api-Default-adminParentsEnvoyerTousPost-0" data-group="User" data-name="adminParentsEnvoyerTousPost" data-version="0">
+                        <div class="pull-left">
+                          <h1>adminParentsEnvoyerTousPost</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/admin/parents/envoyer-tous</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-adminParentsEnvoyerTousPost-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsEnvoyerTousPost-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsEnvoyerTousPost-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-adminParentsEnvoyerTousPost-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-adminParentsEnvoyerTousPost-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsEnvoyerTousPost-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-adminParentsEnvoyerTousPost-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-adminParentsEnvoyerTousPost-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsEnvoyerTousPost-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsEnvoyerTousPost-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsEnvoyerTousPost-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-adminParentsEnvoyerTousPost-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+ -H "Authorization: Bearer [[accessToken]]"\
+"//admin/parents/envoyer-tous"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-adminParentsEnvoyerTousPost-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+
+        DefaultApi apiInstance = new DefaultApi();
+        try {
+            apiInstance.adminParentsEnvoyerTousPost();
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#adminParentsEnvoyerTousPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-adminParentsEnvoyerTousPost-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+        try {
+            apiInstance.adminParentsEnvoyerTousPost();
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#adminParentsEnvoyerTousPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-adminParentsEnvoyerTousPost-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-adminParentsEnvoyerTousPost-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+[apiInstance adminParentsEnvoyerTousPostWithCompletionHandler: 
+              ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-adminParentsEnvoyerTousPost-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var UntitledApi = require('untitled_api');
+var defaultClient = UntitledApi.ApiClient.instance;
+
+
+var api = new UntitledApi.DefaultApi()
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.adminParentsEnvoyerTousPost(callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-adminParentsEnvoyerTousPost-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-adminParentsEnvoyerTousPost-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class adminParentsEnvoyerTousPostExample
+    {
+        public void main()
+        {
+
+
+            var apiInstance = new DefaultApi();
+
+            try
+            {
+                apiInstance.adminParentsEnvoyerTousPost();
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.adminParentsEnvoyerTousPost: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-adminParentsEnvoyerTousPost-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+
+try {
+    $api_instance->adminParentsEnvoyerTousPost();
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->adminParentsEnvoyerTousPost: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-adminParentsEnvoyerTousPost-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+
+eval { 
+    $api_instance->adminParentsEnvoyerTousPost();
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->adminParentsEnvoyerTousPost: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-adminParentsEnvoyerTousPost-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+
+try: 
+    api_instance.admin_parents_envoyer_tous_post()
+except ApiException as e:
+    print("Exception when calling DefaultApi->adminParentsEnvoyerTousPost: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+
+                          <h2>Responses</h2>
+                        </article>
+                      </div>
+                      <hr>
                     <div id="api-Default-adminParentsGet">
                       <article id="api-Default-adminParentsGet-0" data-group="User" data-name="adminParentsGet" data-version="0">
                         <div class="pull-left">
@@ -2088,6 +2310,248 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
+                    <div id="api-Default-adminParentsIdEnvoyerPost">
+                      <article id="api-Default-adminParentsIdEnvoyerPost-0" data-group="User" data-name="adminParentsIdEnvoyerPost" data-version="0">
+                        <div class="pull-left">
+                          <h1>adminParentsIdEnvoyerPost</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/admin/parents/{id}/envoyer</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-adminParentsIdEnvoyerPost-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsIdEnvoyerPost-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsIdEnvoyerPost-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-adminParentsIdEnvoyerPost-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-adminParentsIdEnvoyerPost-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsIdEnvoyerPost-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-adminParentsIdEnvoyerPost-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-adminParentsIdEnvoyerPost-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsIdEnvoyerPost-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsIdEnvoyerPost-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsIdEnvoyerPost-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-adminParentsIdEnvoyerPost-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+ -H "Authorization: Bearer [[accessToken]]"\
+"//admin/parents/{id}/envoyer"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-adminParentsIdEnvoyerPost-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+
+        DefaultApi apiInstance = new DefaultApi();
+         id = ; //  | 
+        try {
+            apiInstance.adminParentsIdEnvoyerPost(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#adminParentsIdEnvoyerPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-adminParentsIdEnvoyerPost-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+         id = ; //  | 
+        try {
+            apiInstance.adminParentsIdEnvoyerPost(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#adminParentsIdEnvoyerPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-adminParentsIdEnvoyerPost-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-adminParentsIdEnvoyerPost-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+ *id = ; // 
+
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+[apiInstance adminParentsIdEnvoyerPostWith:id
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-adminParentsIdEnvoyerPost-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var UntitledApi = require('untitled_api');
+var defaultClient = UntitledApi.ApiClient.instance;
+
+
+var api = new UntitledApi.DefaultApi()
+var id = ; // {{}} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.adminParentsIdEnvoyerPost(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-adminParentsIdEnvoyerPost-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-adminParentsIdEnvoyerPost-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class adminParentsIdEnvoyerPostExample
+    {
+        public void main()
+        {
+
+
+            var apiInstance = new DefaultApi();
+            var id = new (); //  | 
+
+            try
+            {
+                apiInstance.adminParentsIdEnvoyerPost(id);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.adminParentsIdEnvoyerPost: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-adminParentsIdEnvoyerPost-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+$id = ; //  | 
+
+try {
+    $api_instance->adminParentsIdEnvoyerPost($id);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->adminParentsIdEnvoyerPost: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-adminParentsIdEnvoyerPost-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $id = ; #  | 
+
+eval { 
+    $api_instance->adminParentsIdEnvoyerPost(id => $id);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->adminParentsIdEnvoyerPost: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-adminParentsIdEnvoyerPost-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+id =  #  | 
+
+try: 
+    api_instance.admin_parents_id_envoyer_post(id)
+except ApiException as e:
+    print("Exception when calling DefaultApi->adminParentsIdEnvoyerPost: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_adminParentsIdEnvoyerPost_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                        </article>
+                      </div>
+                      <hr>
                     <div id="api-Default-adminParentsIdGet">
                       <article id="api-Default-adminParentsIdGet-0" data-group="User" data-name="adminParentsIdGet" data-version="0">
                         <div class="pull-left">
@@ -2306,6 +2770,248 @@ except ApiException as e:
                                   
                                   
                                       <div id="d2e199_adminParentsIdGet_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-adminParentsIdMotDePassePost">
+                      <article id="api-Default-adminParentsIdMotDePassePost-0" data-group="User" data-name="adminParentsIdMotDePassePost" data-version="0">
+                        <div class="pull-left">
+                          <h1>adminParentsIdMotDePassePost</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/admin/parents/{id}/mot-de-passe</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-adminParentsIdMotDePassePost-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsIdMotDePassePost-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsIdMotDePassePost-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-adminParentsIdMotDePassePost-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-adminParentsIdMotDePassePost-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsIdMotDePassePost-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-adminParentsIdMotDePassePost-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-adminParentsIdMotDePassePost-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsIdMotDePassePost-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsIdMotDePassePost-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-adminParentsIdMotDePassePost-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-adminParentsIdMotDePassePost-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+ -H "Authorization: Bearer [[accessToken]]"\
+"//admin/parents/{id}/mot-de-passe"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-adminParentsIdMotDePassePost-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+
+        DefaultApi apiInstance = new DefaultApi();
+         id = ; //  | 
+        try {
+            apiInstance.adminParentsIdMotDePassePost(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#adminParentsIdMotDePassePost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-adminParentsIdMotDePassePost-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+         id = ; //  | 
+        try {
+            apiInstance.adminParentsIdMotDePassePost(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#adminParentsIdMotDePassePost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-adminParentsIdMotDePassePost-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-adminParentsIdMotDePassePost-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+ *id = ; // 
+
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+[apiInstance adminParentsIdMotDePassePostWith:id
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-adminParentsIdMotDePassePost-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var UntitledApi = require('untitled_api');
+var defaultClient = UntitledApi.ApiClient.instance;
+
+
+var api = new UntitledApi.DefaultApi()
+var id = ; // {{}} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.adminParentsIdMotDePassePost(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-adminParentsIdMotDePassePost-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-adminParentsIdMotDePassePost-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class adminParentsIdMotDePassePostExample
+    {
+        public void main()
+        {
+
+
+            var apiInstance = new DefaultApi();
+            var id = new (); //  | 
+
+            try
+            {
+                apiInstance.adminParentsIdMotDePassePost(id);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.adminParentsIdMotDePassePost: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-adminParentsIdMotDePassePost-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+$id = ; //  | 
+
+try {
+    $api_instance->adminParentsIdMotDePassePost($id);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->adminParentsIdMotDePassePost: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-adminParentsIdMotDePassePost-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $id = ; #  | 
+
+eval { 
+    $api_instance->adminParentsIdMotDePassePost(id => $id);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->adminParentsIdMotDePassePost: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-adminParentsIdMotDePassePost-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+id =  #  | 
+
+try: 
+    api_instance.admin_parents_id_mot_de_passe_post(id)
+except ApiException as e:
+    print("Exception when calling DefaultApi->adminParentsIdMotDePassePost: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_adminParentsIdMotDePassePost_id">
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
@@ -4027,6 +4733,248 @@ except ApiException as e:
                                   
                                   
                                       <div id="d2e199_scrutinsIdDepouillerPut_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-scrutinsIdDeprogrammerPut">
+                      <article id="api-Default-scrutinsIdDeprogrammerPut-0" data-group="User" data-name="scrutinsIdDeprogrammerPut" data-version="0">
+                        <div class="pull-left">
+                          <h1>scrutinsIdDeprogrammerPut</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/scrutins/{id}/deprogrammer</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-scrutinsIdDeprogrammerPut-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-scrutinsIdDeprogrammerPut-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-scrutinsIdDeprogrammerPut-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-scrutinsIdDeprogrammerPut-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-scrutinsIdDeprogrammerPut-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-scrutinsIdDeprogrammerPut-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-scrutinsIdDeprogrammerPut-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-scrutinsIdDeprogrammerPut-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-scrutinsIdDeprogrammerPut-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-scrutinsIdDeprogrammerPut-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-scrutinsIdDeprogrammerPut-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-scrutinsIdDeprogrammerPut-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+ -H "Authorization: Bearer [[accessToken]]"\
+"//scrutins/{id}/deprogrammer"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-scrutinsIdDeprogrammerPut-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+
+        DefaultApi apiInstance = new DefaultApi();
+         id = ; //  | 
+        try {
+            apiInstance.scrutinsIdDeprogrammerPut(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#scrutinsIdDeprogrammerPut");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-scrutinsIdDeprogrammerPut-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+         id = ; //  | 
+        try {
+            apiInstance.scrutinsIdDeprogrammerPut(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#scrutinsIdDeprogrammerPut");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-scrutinsIdDeprogrammerPut-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-scrutinsIdDeprogrammerPut-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+ *id = ; // 
+
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+[apiInstance scrutinsIdDeprogrammerPutWith:id
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-scrutinsIdDeprogrammerPut-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var UntitledApi = require('untitled_api');
+var defaultClient = UntitledApi.ApiClient.instance;
+
+
+var api = new UntitledApi.DefaultApi()
+var id = ; // {{}} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.scrutinsIdDeprogrammerPut(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-scrutinsIdDeprogrammerPut-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-scrutinsIdDeprogrammerPut-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class scrutinsIdDeprogrammerPutExample
+    {
+        public void main()
+        {
+
+
+            var apiInstance = new DefaultApi();
+            var id = new (); //  | 
+
+            try
+            {
+                apiInstance.scrutinsIdDeprogrammerPut(id);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.scrutinsIdDeprogrammerPut: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-scrutinsIdDeprogrammerPut-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+$id = ; //  | 
+
+try {
+    $api_instance->scrutinsIdDeprogrammerPut($id);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->scrutinsIdDeprogrammerPut: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-scrutinsIdDeprogrammerPut-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $id = ; #  | 
+
+eval { 
+    $api_instance->scrutinsIdDeprogrammerPut(id => $id);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->scrutinsIdDeprogrammerPut: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-scrutinsIdDeprogrammerPut-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+id =  #  | 
+
+try: 
+    api_instance.scrutins_id_deprogrammer_put(id)
+except ApiException as e:
+    print("Exception when calling DefaultApi->scrutinsIdDeprogrammerPut: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_scrutinsIdDeprogrammerPut_id">
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
@@ -6483,6 +7431,248 @@ except ApiException as e:
                                   
                                   
                                       <div id="d2e199_scrutinsIdPatch_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-scrutinsIdProgrammerPut">
+                      <article id="api-Default-scrutinsIdProgrammerPut-0" data-group="User" data-name="scrutinsIdProgrammerPut" data-version="0">
+                        <div class="pull-left">
+                          <h1>scrutinsIdProgrammerPut</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/scrutins/{id}/programmer</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-scrutinsIdProgrammerPut-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-scrutinsIdProgrammerPut-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-scrutinsIdProgrammerPut-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-scrutinsIdProgrammerPut-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-scrutinsIdProgrammerPut-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-scrutinsIdProgrammerPut-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-scrutinsIdProgrammerPut-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-scrutinsIdProgrammerPut-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-scrutinsIdProgrammerPut-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-scrutinsIdProgrammerPut-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-scrutinsIdProgrammerPut-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-scrutinsIdProgrammerPut-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+ -H "Authorization: Bearer [[accessToken]]"\
+"//scrutins/{id}/programmer"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-scrutinsIdProgrammerPut-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+
+
+        DefaultApi apiInstance = new DefaultApi();
+         id = ; //  | 
+        try {
+            apiInstance.scrutinsIdProgrammerPut(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#scrutinsIdProgrammerPut");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-scrutinsIdProgrammerPut-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+         id = ; //  | 
+        try {
+            apiInstance.scrutinsIdProgrammerPut(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#scrutinsIdProgrammerPut");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-scrutinsIdProgrammerPut-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-scrutinsIdProgrammerPut-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">Configuration *apiConfig = [Configuration sharedConfig];
+ *id = ; // 
+
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+[apiInstance scrutinsIdProgrammerPutWith:id
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-scrutinsIdProgrammerPut-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var UntitledApi = require('untitled_api');
+var defaultClient = UntitledApi.ApiClient.instance;
+
+
+var api = new UntitledApi.DefaultApi()
+var id = ; // {{}} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.scrutinsIdProgrammerPut(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-scrutinsIdProgrammerPut-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-scrutinsIdProgrammerPut-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class scrutinsIdProgrammerPutExample
+    {
+        public void main()
+        {
+
+
+            var apiInstance = new DefaultApi();
+            var id = new (); //  | 
+
+            try
+            {
+                apiInstance.scrutinsIdProgrammerPut(id);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.scrutinsIdProgrammerPut: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-scrutinsIdProgrammerPut-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+$id = ; //  | 
+
+try {
+    $api_instance->scrutinsIdProgrammerPut($id);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->scrutinsIdProgrammerPut: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-scrutinsIdProgrammerPut-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $id = ; #  | 
+
+eval { 
+    $api_instance->scrutinsIdProgrammerPut(id => $id);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->scrutinsIdProgrammerPut: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-scrutinsIdProgrammerPut-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+id =  #  | 
+
+try: 
+    api_instance.scrutins_id_programmer_put(id)
+except ApiException as e:
+    print("Exception when calling DefaultApi->scrutinsIdProgrammerPut: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_scrutinsIdProgrammerPut_id">
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
