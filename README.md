@@ -1,10 +1,10 @@
-# 🗳️ VoteParentsEleves
+# VoteParentsEleves
 
 **VoteParentsEleves** est une solution complète de vote électronique pour les élections des représentants de parents d'élèves. Ce projet utilise **Kotlin Multiplatform** et **Compose Multiplatform** pour offrir une expérience fluide et cohérente sur Android, iOS, le Web et le Bureau.
 
 ---
 
-## 🌟 Fonctionnalités
+## Fonctionnalités
 
 ### Pour les Électeurs
 *   **Vote Multi-support** : Votez depuis votre smartphone (Android/iOS) ou votre navigateur web.
@@ -22,7 +22,7 @@
 
 ---
 
-## 🏗️ Architecture du Projet
+## Architecture du Projet
 
 Le projet est organisé en plusieurs modules pour maximiser le partage de code :
 
@@ -35,7 +35,7 @@ Le projet est organisé en plusieurs modules pour maximiser le partage de code :
 
 ---
 
-## 🛠️ Technologies
+## Technologies
 
 *   **Langage** : Kotlin (100%)
 *   **UI** : Compose Multiplatform
@@ -47,7 +47,7 @@ Le projet est organisé en plusieurs modules pour maximiser le partage de code :
 
 ---
 
-## 🚀 Démarrage Rapide
+## Démarrage Rapide
 
 ### Prérequis
 *   JDK 17 ou supérieur
@@ -72,7 +72,7 @@ Le serveur est nécessaire pour toutes les applications électeurs.
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Le backend peut être configuré via le fichier [`server/src/main/resources/application.yaml`](./server/src/main/resources/application.yaml).
 *   **JWT** : Le secret est généré automatiquement au premier lancement dans `~/.voteparentseleves/jwt-secret.key`.
@@ -80,7 +80,7 @@ Le backend peut être configuré via le fichier [`server/src/main/resources/appl
 
 ---
 
-## 🧪 Tests
+## Tests
 
 Vous pouvez lancer les tests sur les différents modules avec :
 *   **Android** : `./gradlew :shared:testAndroidHostTest`
@@ -88,5 +88,3 @@ Vous pouvez lancer les tests sur les différents modules avec :
 *   **iOS** : `./gradlew :shared:iosSimulatorArm64Test`
 
 ---
-
-*Développé avec ❤️ pour simplifier la démocratie scolaire.*
