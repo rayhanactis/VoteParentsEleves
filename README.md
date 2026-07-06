@@ -1,42 +1,90 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Web.
+# VoteParentsEleves
 
-* [/iosApp](./iosApp/iosApp) contains an iOS application. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
-
-* [/shared](./shared/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./shared/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./shared/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./shared/src/jvmMain/kotlin)
-    folder is the appropriate location.
-
-### Running the apps
-
-Use the run configurations provided by the run widget in your IDE's toolbar. You can also use these commands and options:
-
-- Android app: `./gradlew :androidApp:assembleDebug`
-- Web app:
-  - Wasm target (faster, modern browsers): `./gradlew :webApp:wasmJsBrowserDevelopmentRun`
-  - JS target (slower, supports older browsers): `./gradlew :webApp:jsBrowserDevelopmentRun`
-- iOS app: open the [/iosApp](./iosApp) directory in Xcode and run it from there.
-
-### Running tests
-
-Use the run button in your IDE's editor gutter, or run tests using Gradle tasks:
-
-- Android tests: `./gradlew :shared:testAndroidHostTest`
-- Web tests:
-  - Wasm target: `./gradlew :shared:wasmJsTest`
-  - JS target: `./gradlew :shared:jsTest`
-- iOS tests: `./gradlew :shared:iosSimulatorArm64Test`
+**VoteParentsEleves** est une solution complète de vote électronique pour les élections des représentants de parents d'élèves. Ce projet utilise **Kotlin Multiplatform** et **Compose Multiplatform** pour offrir une expérience fluide et cohérente sur Android, iOS, le Web et le Bureau.
 
 ---
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+## Fonctionnalités
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [YouTrack](https://youtrack.jetbrains.com/newIssue?project=CMP).
+### Pour les Électeurs
+*   **Vote Multi-support** : Votez depuis votre smartphone (Android/iOS) ou votre navigateur web.
+*   **Sécurité** : Authentification par code unique et mot de passe.
+*   **Accessibilité** : Interface simple, moderne et intuitive conçue avec Compose.
+*   **Reçu de Vote** : Obtention d'un identifiant de bulletin après chaque vote pour garantir la transparence.
+
+### Pour les Administrateurs (App Desktop)
+*   **Gestion des Scrutins** : Création, programmation, ouverture et fermeture des votes.
+*   **Import/Export** : Importation de listes d'électeurs et de parents depuis des fichiers.
+*   **Logistique** : Génération automatique de fiches d'identifiants (PDF) avec QR codes pour faciliter la connexion.
+*   **Résultats instantanés** : Calcul automatique des sièges selon la méthode de la plus forte moyenne (Algorithme de Hare-Niemeyer).
+*   **Procès-Verbal** : Génération du PV de fin de scrutin.
+*   **Assistant IA** : Aide intégrée via **LangChain4j** et **Ollama** pour assister le jury (branche feature/ia).
+
+---
+
+## Architecture du Projet
+
+Le projet est organisé en plusieurs modules pour maximiser le partage de code :
+
+*   [`/shared`](./shared) : Contient la logique métier partagée, les modèles de données et les composants UI (Compose Multiplatform).
+*   [`/server`](./server) : Backend **Ktor** gérant l'API, l'authentification JWT, et la base de données (SQLite avec **Exposed**).
+*   [`/adminApp`](./adminApp) : Application Bureau (JVM) riche pour l'administration et la gestion physique du scrutin.
+*   [`/webApp`](./webApp) : Client web ciblant **WebAssembly (Wasm)** et **JavaScript**.
+*   [`/androidApp`](./androidApp) : Application Android native.
+*   [`/iosApp`](./iosApp) : Application iOS (SwiftUI point d'entrée).
+
+---
+
+## Technologies
+
+*   **Langage** : Kotlin (100%)
+*   **UI** : Compose Multiplatform
+*   **Backend** : Ktor (Server & Client)
+*   **Base de données** : SQLite / JetBrains Exposed
+*   **Génération PDF** : Apache PDFBox
+*   **QR Codes** : ZXing
+*   **IA** : LangChain4j + Ollama
+
+---
+
+## Démarrage Rapide
+
+### Prérequis
+*   JDK 17 ou supérieur
+*   Android Studio / IntelliJ IDEA (dernière version recommandée)
+*   Xcode (pour le développement iOS)
+
+### Lancement du Serveur
+Le serveur est nécessaire pour toutes les applications électeurs.
+```bash
+./gradlew :server:run
+```
+
+### Lancement de l'App Administration (Desktop)
+```bash
+./gradlew :adminApp:run
+```
+
+### Lancement des Clients Électeurs
+*   **Android** : `./gradlew :androidApp:assembleDebug`
+*   **Web (Wasm)** : `./gradlew :webApp:wasmJsBrowserDevelopmentRun`
+*   **iOS** : Ouvrez le dossier `/iosApp` dans Xcode.
+
+---
+
+## Configuration
+
+Le backend peut être configuré via le fichier [`server/src/main/resources/application.yaml`](./server/src/main/resources/application.yaml).
+*   **JWT** : Le secret est généré automatiquement au premier lancement dans `~/.voteparentseleves/jwt-secret.key`.
+*   **SMTP** : La configuration pour l'envoi des mails d'identifiants se fait directement dans l'application d'administration.
+
+---
+
+## Tests
+
+Vous pouvez lancer les tests sur les différents modules avec :
+*   **Android** : `./gradlew :shared:testAndroidHostTest`
+*   **Web** : `./gradlew :shared:wasmJsTest`
+*   **iOS** : `./gradlew :shared:iosSimulatorArm64Test`
+
+---
